@@ -18,6 +18,7 @@ import json
 from pathlib import Path
 from typing import Iterable, Iterator
 
+from tokenizers import Regex
 from tokenizers import Tokenizer as HFTokenizer
 from tokenizers import decoders, models, pre_tokenizers, processors, trainers
 
@@ -50,10 +51,30 @@ def train_tokenizer(
     tok = HFTokenizer(models.BPE(byte_fallback=True))
     tok.pre_tokenizer = pre_tokenizers.Sequence(
         [
-            # Llama 3 / GPT-4 style pre-tokenizer: byte-level, split digits,
-            # add no prefix space.
+            # Digit chunking, cap 3: the tiktoken-lineage scheme Llama 3 and
+            # GPT-4 popularized and that every 2026 frontier release we
+            # checked (GLM-5.2/5.3, Kimi K3, Meta's Muse Glimmer) still
+            # ships verbatim as one branch of their pretokenizer regex —
+            # `\p{N}{1,3}`. It keeps a number's tokenization independent of
+            # its surrounding text (unlike leaving digit runs to ByteLevel's
+            # own regex, which merges them into whatever chunk the BPE
+            # trainer found most frequent) without paying full single-digit
+            # isolation's token cost.
+            #
+            # `pattern` MUST be wrapped in `Regex(...)` — passing a plain
+            # `str` makes `Split` match it as a LITERAL substring instead of
+            # a regex, so e.g. `pattern=r"\d"` silently never matches
+            # anything (no digit string literally contains the two
+            # characters "\d") and this step becomes a no-op. That was the
+            # bug here for every tokenizer.json trained before this fix:
+            # digits fell through to ByteLevel's own regex and got merged
+            # into arbitrary multi-digit tokens (BPE-frequency-dependent,
+            # not place-value-aligned), which is well documented to hurt
+            # multi-step arithmetic. Verify with
+            # ``pre_tokenizer.pre_tokenize_str("4567")`` after any change
+            # here — it must come back split, not as one `"4567"` chunk.
             pre_tokenizers.Split(
-                pattern=r"\d",  # explicit digit splitting
+                pattern=Regex(r"\p{N}{1,3}"),
                 behavior="isolated",
             ),
             pre_tokenizers.ByteLevel(add_prefix_space=False, use_regex=True),
