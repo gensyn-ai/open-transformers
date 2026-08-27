@@ -9,6 +9,9 @@ This module exposes:
 - :func:`train_tokenizer` — one-shot training from a text iterator.
 - :class:`Tokenizer` — load + encode/decode a frozen tokenizer.
 - :func:`compute_hash` — content hash used for the manifest.
+- :func:`assert_fresh_digit_pretokenizer` — stale-artifact guard for
+  prep/train entrypoints; see its docstring for why it isn't on the load
+  path used by an already-running pretrain/midtrain job.
 """
 
 from __future__ import annotations
@@ -104,6 +107,38 @@ def compute_hash(tokenizer_path: str | Path) -> str:
     data = json.loads(p.read_text(encoding="utf-8"))
     canonical = json.dumps(data, sort_keys=True, separators=(",", ":")).encode()
     return hashlib.sha256(canonical).hexdigest()
+
+
+def assert_fresh_digit_pretokenizer(tokenizer_path: str | Path) -> None:
+    """Fail loudly if ``tokenizer_path`` predates the digit-pretokenizer fix.
+
+    Before this fix, ``train_tokenizer`` serialized the digit-split step's
+    pattern as ``{"String": "\\d"}`` (a literal-substring match that never
+    fires — the bug this module now avoids). A fixed artifact serializes it
+    as ``{"Regex": "\\p{N}{1,3}"}``. Call this from prep/train entrypoints
+    *before* trusting a cached or newly-produced ``tokenizer.json`` — e.g.
+    right after a tokenizer-prep job decides "output already exists, skip
+    training" (a stale artifact would otherwise sail through that idempotency
+    check silently, forever) or before kicking off a fresh pretraining run.
+
+    Deliberately NOT called from :class:`Tokenizer` or anywhere on the load
+    path used by an *existing* run's data loader, checkpoint restore, or
+    eval — the live 1B pretrain/midtrain tokenizer predates this fix by
+    necessity and must keep loading there.
+    """
+    p = Path(tokenizer_path)
+    data = json.loads(p.read_text(encoding="utf-8"))
+    pretokenizers = (data.get("pre_tokenizer") or {}).get("pretokenizers") or []
+    digit_step = next((pt for pt in pretokenizers if pt.get("type") == "Split"), None)
+    if digit_step is None or "Regex" not in digit_step.get("pattern", {}):
+        raise ValueError(
+            f"{p} has a pre-digit-fix pre-tokenizer (pattern="
+            f"{digit_step.get('pattern') if digit_step else None!r}, expected a "
+            '{"Regex": ...} pattern) — this is the stale-tokenizer trap: digits '
+            "silently never got split, and every token id trained against this "
+            "file inherits that. Retrain with the current train_tokenizer() "
+            "rather than reusing this artifact."
+        )
 
 
 class Tokenizer:
