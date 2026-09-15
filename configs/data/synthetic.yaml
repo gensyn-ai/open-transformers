@@ -1,0 +1,13 @@
+# Synthetic data for the M0 smoke test (plan/07 §1.2).
+# Populated by: `python -m pretrain.cli.prepare_data synthetic --output-dir data/shards/synthetic`.
+# Two synthetic "sources" so the mix sampler is also exercised.
+sources:
+  - name: synth_a
+    path: data/shards/synthetic/synth_a
+    weight: 0.7
+  - name: synth_b
+    path: data/shards/synthetic/synth_b
+    weight: 0.3
+seq_len: 1024
+document_separator_id: 0
+pack_strategy: concat_eos

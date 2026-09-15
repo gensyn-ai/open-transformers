@@ -1,0 +1,36 @@
+{
+  "trajectory_format": 1,
+  "name": "init-units-v1",
+  "repop_commit": "c9ca6e71e673660afc6c87de2592fa6f62c87b15",
+  "pretrain_commit": "SET-BY-PUBLISHER",
+  "notes": "Config-only init units: each verifies that build_model + seeded device-independent init + zeroed optimizer state reproduces the canonical state hash, bit for bit, with no checkpoint or data download. Minted on an M4 Max from clean wheel installs; every digest below was byte-identical between cpu and mps at minting. Step-interval units are added per run once its checkpoints and state_hash files are published. Re-pinned from 244c0791e378 to eab4e11d2c7f8 (the audit splice: ac9513634 plus packaging only, no kernel touched) and re-verified there, 3 units by 2 devices, all 6 byte-identical to the digests below, so the repin moved no hash. Re-pinned again from eab4e11d2c7f8 to 646596fe0333 (three further packaging commits; no kernel arithmetic touched) and re-verified there, 3 units by 2 devices, all 6 byte-identical to the digests below, so this repin also moved no hash. Re-pinned a third time from 646596fe0333 to c9ca6e71e673 (ARM CPU audit-runtime optimizations, Metal audit attention, and mm_accumulate; unlike the prior two repins this range does touch kernel arithmetic) and re-verified on an M4 Max from a clean release build at that commit, 3 units by 2 devices, all 6 again byte-identical to the digests below. This says only that seeded init and zeroed optimizer state are unaffected by the changed kernels, which is expected since init units never call the forward/backward paths those kernels changed; it is not itself evidence for the kernel-level BFR contract at this commit.",
+  "units": [
+    {
+      "kind": "init",
+      "config_name": "100m_smoke_repop",
+      "until_step": 0,
+      "state_hash": "9461b1480e3fd9061de848b473675875bd2cad1392112b752fe8fd88046063ba",
+      "devices_verified": ["cpu", "mps"],
+      "mps_wall_seconds": 5.0,
+      "mps_peak_rss_gb": 1.8
+    },
+    {
+      "kind": "init",
+      "config_name": "1b_repop_run3",
+      "until_step": 0,
+      "state_hash": "e8d5dce15fafd4e199485919aaf1286b93953ec0872f2d20fdfb0878739323e2",
+      "devices_verified": ["cpu", "mps"],
+      "mps_wall_seconds": 29.7,
+      "mps_peak_rss_gb": 5.8
+    },
+    {
+      "kind": "init",
+      "config_name": "1b_repop_v2",
+      "until_step": 0,
+      "state_hash": "16554a1119745f1b9bf4ac60b03226e5e9ca1247a2bd56169cd4c822fd457aed",
+      "devices_verified": ["cpu", "mps"],
+      "mps_wall_seconds": null,
+      "mps_peak_rss_gb": null
+    }
+  ]
+}

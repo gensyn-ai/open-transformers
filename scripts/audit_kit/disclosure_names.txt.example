@@ -1,0 +1,16 @@
+# Team names that internal resources get named after: "<name>-disk-1t",
+# "<name>-hf-token", "<name>/some-branch". check_wheel_disclosure.py needs
+# them to recognise one in text about to be published, and refuses to scan
+# without them.
+#
+# Copy to disclosure_names.txt (gitignored) and fill in, or export
+# PRETRAIN_DISCLOSURE_NAMES="ada,grace,alan" instead. One name per line or
+# comma-separated; '#' starts a comment; matching is case-insensitive.
+#
+# Deliberately NOT tracked: the names are the identifying text the published
+# artifacts are scrubbed of, so a checked-in list would leak what the gate
+# exists to catch.
+
+# ada
+# grace
+# alan

@@ -1,0 +1,14 @@
+# Single-node 8 × H100 / GB10 (DGX Spark). Same path; nproc-per-node varies.
+run_id: ""              # filled at launch by scripts/launch_single_node.sh
+seed: 42
+output_dir: runs
+nproc_per_node: 8
+dp_shard_size: -1
+dp_replicate_size: 1
+parallel: fsdp          # "fsdp" | "ddp" — override at CLI for DDP runs
+mixed_precision: true   # bf16 autocast + FSDP2 bf16 policy; flip to false for fp32
+activation_checkpoint: true
+ac_every_other_block: false
+
+# Topology-invariant gradient reduction (auditable). "nccl" opts out for throughput.
+reduction_mode: deterministic_allgather

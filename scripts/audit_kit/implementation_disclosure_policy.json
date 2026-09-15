@@ -1,0 +1,1727 @@
+{
+  "format": 1,
+  "approved_members": {
+    "pretrain-0.1.0.dist-info/METADATA": [
+      {
+        "sha256": "6efa5f4716b5060f7ae6922317c45fc0e4d170fb6c6dd0bf11d2a4b279a08f2b",
+        "reason": "Standard wheel metadata carrying the distribution name, version and dependency pins. pip needs it to install the wheel and to resolve the environment an audit runs in."
+      },
+      {
+        "sha256": "ea4b53f55113f375693c19ea124718061de7e426f10dcefffedaece3040aa162",
+        "reason": "Standard wheel metadata carrying the distribution name, version and dependency pins. pip needs it to install the wheel and to resolve the environment an audit runs in. Content changed only in README-dist.md's verbatim-embedded body, which now documents --cpu-threads auto, PRETRAIN_AUDIT_STREAM_HEAD and PRETRAIN_AUDIT_MPS_OFFLOAD_GRADIENTS for the verifier."
+      }
+    ],
+    "pretrain-0.1.0.dist-info/WHEEL": [
+      {
+        "sha256": "7afc5cab588b32e3f7fa2614bce01d04db458d61d1ff6097d090d749cdd25c86",
+        "reason": "Installer metadata declaring wheel format 1.0 and the platform tag cp311-cp311-macosx_14_0_arm64. pip needs it to install the wheel."
+      },
+      {
+        "sha256": "e3ba567baaa9598d635ff9b61d481043c29f78f4e9d0f297a3fe7817188c5ccf",
+        "reason": "Installer metadata declaring wheel format 1.0 and the platform tag cp311-cp311-linux_x86_64. pip needs it to install the wheel."
+      }
+    ],
+    "pretrain-0.1.0.dist-info/entry_points.txt": [
+      {
+        "sha256": "4426d1d510c9583d69465b4242be2a4d077265a1f683fd37bda31737da5a99fd",
+        "reason": "Console-script table registering pretrain-audit-replay, pretrain-audit-verify-handoff, pretrain-dcp-safetensors and 8 more. A native wheel holds no code objects, so `python -m pretrain.cli.audit_replay` cannot run and these scripts are the only way to invoke the replay."
+      }
+    ],
+    "pretrain-0.1.0.dist-info/licenses/LICENSE.md": [
+      {
+        "sha256": "c0ea4a896d2c8c394b29f9427589996db826cd501c512279ff0ed3ef48fabbe5",
+        "reason": "Licence text for the distribution, shipped so the published artifact carries its own terms."
+      }
+    ],
+    "pretrain/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "71c4d23593579d11d3659f4e4abfe782c79f29a58bcc396e5c27fa05fa30b812",
+        "reason": "Compiled package initialiser for pretrain, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "1546644b25cd8cd71507759249314d194f44ecc4c52fa7787db70f73c28c6d6a",
+        "reason": "Compiled package initialiser for pretrain, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/_configs/data/dolma3_dolmino_mix.yaml": [
+      {
+        "sha256": "9585e720694f6c382173c0e20c2de76e944dc7e2e3cb3e0c372d101285e3b3e3",
+        "reason": "Training configuration describing the data recipe and mixture weights. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/data/proxy.yaml": [
+      {
+        "sha256": "39577d1daa148796a7fd1c74ae2ea0bbfe4c91423c3c24269136097be798ea3c",
+        "reason": "Training configuration describing the data recipe and mixture weights. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/data/recipe_v1.yaml": [
+      {
+        "sha256": "d6952eeb6167332071660ad9c19c222a0f2ddaef9e99d5e83491aac8f62eed35",
+        "reason": "Training configuration describing the data recipe and mixture weights. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/data/recipe_v1_proportional.yaml": [
+      {
+        "sha256": "1e7d17341fc1a944c6135f26252c90678743d06dba76ce8426e4ba0f1e79891b",
+        "reason": "Training configuration describing the data recipe and mixture weights. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/data/synthetic.yaml": [
+      {
+        "sha256": "a6b1e7076f04fe554ce033337712cc6091d45a7dfc8552603a0a47de981452ea",
+        "reason": "Training configuration describing the data recipe and mixture weights. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/model/llama3_100m_smoke_repop.yaml": [
+      {
+        "sha256": "9932127e3113dfa71abf85de88d5d9bc74ed1657eecf904793bdd807d8d85e59",
+        "reason": "Training configuration describing the model architecture. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/model/llama3_1b_proxy_repop.yaml": [
+      {
+        "sha256": "c8983a12983c1b843ac3f2789cb6fd0ba14f4ba8c1dd7ee2c375447a93cb298d",
+        "reason": "Training configuration describing the model architecture. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/optim/adamw_default.yaml": [
+      {
+        "sha256": "d07395762cf4fa63f1bb97491c5a3716c31398584ee451e69543394f4f2de90c",
+        "reason": "Training configuration describing the optimizer settings. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/optim/adamw_repop.yaml": [
+      {
+        "sha256": "154e1e3e6e61d226b5bb831c0a2432360524a6895c209acba2a7267cbea529f9",
+        "reason": "Training configuration describing the optimizer settings. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/optim/muon_hidden_adamw_aux.yaml": [
+      {
+        "sha256": "2d921d5dd590f72b69ae453ccd454c5ad6ceea920f19a6f4136780edc494e68f",
+        "reason": "Training configuration describing the optimizer settings. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/run/multi_node_4xh100.yaml": [
+      {
+        "sha256": "f54ed4d4b8356a4f3fbb8f21465e638e3063f99b43868aaa9a41f377f8d96166",
+        "reason": "Training configuration describing the cluster topology. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/run/single_node_8xh100.yaml": [
+      {
+        "sha256": "91eabd66653e9efcfb917abad4e9a94c17979a20faa099d18b99d1487a8d9fb2",
+        "reason": "Training configuration describing the cluster topology. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/run/single_node_dgx_spark.yaml": [
+      {
+        "sha256": "80caca9f1d7604fb055f0f4b439da0ceb1afc18a9591d5670b73fa315121a3ec",
+        "reason": "Training configuration describing the cluster topology. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/schedule/cosine.yaml": [
+      {
+        "sha256": "c2aab03acd514c0b48d65cddf93bd2f7712f96d067ce8478e502d8993b9b549e",
+        "reason": "Training configuration describing the learning-rate schedule. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/schedule/linear_anneal.yaml": [
+      {
+        "sha256": "269c531666befdb96333ef192558c0cf99802cd608e9e69d41c82eed4e8461a2",
+        "reason": "Training configuration describing the learning-rate schedule. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/schedule/wsd.yaml": [
+      {
+        "sha256": "18915480c5b29e516f8cbaa1508352111be835b63d34fe2f913e4a443b2dfedc",
+        "reason": "Training configuration describing the learning-rate schedule. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/100m_smoke_repop.yaml": [
+      {
+        "sha256": "80e195803aeeaed9b76df036121d260724cb66fb451fda03722a46ab0188e8a0",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/100m_smoke_repop_100step.yaml": [
+      {
+        "sha256": "5163b89d33e8ca51a1c6217130b6156861b8ece5ead6390d3d98a45f66d351c6",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/1b_midtrain_math.yaml": [
+      {
+        "sha256": "25c532ab41a580986e0dcf205bbe04256ad45d7492a7774b1fd37f31342163c9",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/1b_proxy_repop.yaml": [
+      {
+        "sha256": "b71b112145b98470aab4977f0d7c42001c7e38904305527615d5d4c39c355bf7",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/1b_repop.yaml": [
+      {
+        "sha256": "e1410b176e718c3198d12fe16f45325507a9450a353aa89108b14242913e9b66",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/1b_repop_run3.yaml": [
+      {
+        "sha256": "8e0241be5be5509b75e8afad8673b96b933f9e78d19d506748966cc96b2a7aa7",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/_configs/train/1b_repop_v2.yaml": [
+      {
+        "sha256": "67289e8ace9018973d866906e3631ae137be3d96e71a7c8f79d1d2dcf12a1130",
+        "reason": "Training configuration describing the end-to-end training recipe. An auditor needs the recipe to replay the run, and the shipped configs were scanned for URLs, bucket names, hostnames, credentials and absolute paths, and carry none."
+      }
+    ],
+    "pretrain/cli/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "ea9840f6804c387bf6ea86b1ecdb574dc64d131eee3a78ecbc33762ce1ef136f",
+        "reason": "Compiled package initialiser for pretrain.cli, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "0fc4108586930341cf10e65b52b7fa59b2f4419931c85b9bfcb0ada96f9ce0fd",
+        "reason": "Compiled package initialiser for pretrain.cli, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/audit_replay.cpython-311-darwin.so": [
+      {
+        "sha256": "dc42876f9f74437db303db8529556cfc8550e99a69343472826a3096eba3f4c2",
+        "reason": "Compiled implementation of pretrain.cli.audit_replay, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "b88a4b8cfdb9445dcd3f7b0ef14d261df6ec72b48e4c6de1d1963d97e83b83c7",
+        "reason": "Compiled implementation of pretrain.cli.audit_replay, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/audit_replay.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "11faccd3fb3db0fe91748bd7e6938731e2e1a70e3c2d89913a8ea609198d0da3",
+        "reason": "Compiled implementation of pretrain.cli.audit_replay, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "8747d7de202052b7c0bbd6e9feba56e2114045b23863dd0a2460aefb79a7984f",
+        "reason": "Compiled implementation of pretrain.cli.audit_replay, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/dcp_safetensors.cpython-311-darwin.so": [
+      {
+        "sha256": "dbc84b260227c9b1c59e8598d5f3daf39ed8aeb7008657492cfaccd5c468377a",
+        "reason": "Compiled implementation of pretrain.cli.dcp_safetensors, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/dcp_safetensors.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "be3d4264a037570c5a0c3c1bbb96129cf5e76544f9799261f5791ea8b02d37f4",
+        "reason": "Compiled implementation of pretrain.cli.dcp_safetensors, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/dump_doc_map.cpython-311-darwin.so": [
+      {
+        "sha256": "c0a1a42a6b6f4a100c766f7d203f69868e6304fd1a42dc4ae75ca3f41e7c9d8c",
+        "reason": "Compiled implementation of pretrain.cli.dump_doc_map, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/dump_doc_map.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "d242429a424361feff738ad22425edc4bfca9d20139b42aa662bd2e1c0b87e0a",
+        "reason": "Compiled implementation of pretrain.cli.dump_doc_map, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/dump_documents.cpython-311-darwin.so": [
+      {
+        "sha256": "baab3a685c24cd7bfa745ea83da17159416090b1eade765e4d814d78d96e9075",
+        "reason": "Compiled implementation of pretrain.cli.dump_documents, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/dump_documents.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "0fd9a6989ab7e023bce42cc035d9012368417e3b3ea8f0a7882777a316e5a042",
+        "reason": "Compiled implementation of pretrain.cli.dump_documents, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/eval.cpython-311-darwin.so": [
+      {
+        "sha256": "4f493e82bdffa511fcd08ab9b04ad6171324a771bfabc6c82ba24ded870a3745",
+        "reason": "Compiled implementation of pretrain.cli.eval, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/eval.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "34170785a9d0fdb07d1e5311c7b4c685f8aaa6137236062bc48abaf2a99a89e7",
+        "reason": "Compiled implementation of pretrain.cli.eval, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/eval_olmes.cpython-311-darwin.so": [
+      {
+        "sha256": "f9c270534126137fb744ae35a313b8b61d11735b5482632f50f2397c0beb5263",
+        "reason": "Compiled implementation of pretrain.cli.eval_olmes, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/eval_olmes.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "e9066a71029fff1e14c571010035da16df4942fa363633236d1732921b4a80af",
+        "reason": "Compiled implementation of pretrain.cli.eval_olmes, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/fetch_audit_data.cpython-311-darwin.so": [
+      {
+        "sha256": "d7ac2e3e601d6b91ab2d97a174d3559ee025d950b81c17a89ff3da44de6ca4bf",
+        "reason": "Compiled implementation of pretrain.cli.fetch_audit_data, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/fetch_audit_data.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "84dd8c9c498170e289399732fec45b5e9561a039fdb2d3deac4970e28ce56af9",
+        "reason": "Compiled implementation of pretrain.cli.fetch_audit_data, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/hash_ckpt.cpython-311-darwin.so": [
+      {
+        "sha256": "0ba8fc4a682124232e3ab91087cc435080d4fd8e2bfc43a2fb1aa95527ede61b",
+        "reason": "Compiled implementation of pretrain.cli.hash_ckpt, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/hash_ckpt.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "7a97346ad2e3853dfbc3c20bd37a879dded069d57eefb790584ac50a75453f3d",
+        "reason": "Compiled implementation of pretrain.cli.hash_ckpt, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/inspect_checkpoint.cpython-311-darwin.so": [
+      {
+        "sha256": "d14c867cee93287bb1370c30b6f7570b812cc0d7cb5df7b7072af7ea58988d6d",
+        "reason": "Compiled implementation of pretrain.cli.inspect_checkpoint, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/inspect_checkpoint.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "c8611f3909d95ad901dcd5e3e730220aa74d1fa7bb69334acfed397e83bde786",
+        "reason": "Compiled implementation of pretrain.cli.inspect_checkpoint, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/prepare_data.cpython-311-darwin.so": [
+      {
+        "sha256": "a1ed0e36336d382f36496494f6c75417de5c14832b2e255ccf7a1cf668034e0f",
+        "reason": "Compiled implementation of pretrain.cli.prepare_data, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/prepare_data.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "59faede5af7948aab3a788795bffbed42945099c330b078160a62bd90acc112d",
+        "reason": "Compiled implementation of pretrain.cli.prepare_data, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/train.cpython-311-darwin.so": [
+      {
+        "sha256": "488185eddfbd72dc11088ae69879a54827307f1b14ab2aa36d1064a748f62a2d",
+        "reason": "Compiled implementation of pretrain.cli.train, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/train.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "da16c899a252c7fe4ff50cf37a25ec19c203a1bb50094ecd0f43389fed79d860",
+        "reason": "Compiled implementation of pretrain.cli.train, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/verify_handoff.cpython-311-darwin.so": [
+      {
+        "sha256": "c8cf856e3281f3ca807f9c732955736b976f90660dc5d94f2bd387240acfe8a4",
+        "reason": "Compiled implementation of pretrain.cli.verify_handoff, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/verify_handoff.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "4949b319f03c628d34cb3d2d4207be46c2675cd5aab87bc431768d71bc504d34",
+        "reason": "Compiled implementation of pretrain.cli.verify_handoff, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/config/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "b4b0addab76a4f0e9bb31b7ed8d403a0f34bdb8456cde06fc2cec946233a6d08",
+        "reason": "Compiled package initialiser for pretrain.config, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/config/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "9638d5cea2dd685363d720d9f177f0b4c3a7b5c5ba9d9bc49a462fa5440bd9f1",
+        "reason": "Compiled package initialiser for pretrain.config, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/config/load.cpython-311-darwin.so": [
+      {
+        "sha256": "bfc3974d5e4906a3e7caf54271c331b4022e795ffea891af062f5bd7cfb0ebfe",
+        "reason": "Compiled implementation of pretrain.config.load, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/config/load.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "9e82a930ff283dda115ae761d19696b0281d861036942830f71c94a411fce702",
+        "reason": "Compiled implementation of pretrain.config.load, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/config/schema.cpython-311-darwin.so": [
+      {
+        "sha256": "c378e148d528d98f188b6cb1f8c8b5923b3e56d3e03c0dfbb2fa9176ea2d2c53",
+        "reason": "Compiled implementation of pretrain.config.schema, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/config/schema.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "dcf4ebd1dd979d3bf5e3a27ff6d6fbff9634a63cb93e789d269900ba34c7a6d6",
+        "reason": "Compiled implementation of pretrain.config.schema, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "278b8a592de5f918ebc088a3c64183fd4ad3d53e5474f75f92794955a7ab6177",
+        "reason": "Compiled package initialiser for pretrain.data, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "a45fabd19503531b2a39bf5fdb70b7e3c5c0533b6a0dc3842bf725bf3e9516dd",
+        "reason": "Compiled package initialiser for pretrain.data, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/doc_map.cpython-311-darwin.so": [
+      {
+        "sha256": "ac65b642a46076698524eb5e989ac0fc638144c00aedd0d0fbb5cee61de73db2",
+        "reason": "Compiled implementation of pretrain.data.doc_map, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/doc_map.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "dc64cd66f6c059ea931bbaaa5e3f4cb2741a72cc67c6d24601cbd366de513639",
+        "reason": "Compiled implementation of pretrain.data.doc_map, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/fetch_interval.cpython-311-darwin.so": [
+      {
+        "sha256": "b9a48da58f452b9519ffc3f2abe22140fac611d948affc53eb401f198c979326",
+        "reason": "Compiled implementation of pretrain.data.fetch_interval, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/fetch_interval.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "c42425d0dce48720d2decf717ed263406670005f07d4fb8cee6b1e883108e52a",
+        "reason": "Compiled implementation of pretrain.data.fetch_interval, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/global_stream.cpython-311-darwin.so": [
+      {
+        "sha256": "e4818f8dfb36331edc76792fe1e996790d83692005270eb866ce26175ddad57f",
+        "reason": "Compiled implementation of pretrain.data.global_stream, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/global_stream.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "068d20eeeeefc0125ca372e3e579fb483dcff9d63cd1f4b5aee12a8935522bf3",
+        "reason": "Compiled implementation of pretrain.data.global_stream, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/indexed_dataset.cpython-311-darwin.so": [
+      {
+        "sha256": "c3cfb8163cee9eddf7249a582adbcd3a1c078de4523eb8f03c05d019f46602d3",
+        "reason": "Compiled implementation of pretrain.data.indexed_dataset, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/indexed_dataset.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "359ad1f00a56962f3d75ca22d3f468d4f15d8cdbb1c948b9b0458d4b80e9b6db",
+        "reason": "Compiled implementation of pretrain.data.indexed_dataset, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/loader.cpython-311-darwin.so": [
+      {
+        "sha256": "0992a17ec1ca5a4c799559189e8e0c491d49beaca2b93f62f4935cc389a15f21",
+        "reason": "Compiled implementation of pretrain.data.loader, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/loader.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "8e4b65695ec0aba89513c69cf1ca1c32d8b1149563028daf7c5b8ba2c9dd296f",
+        "reason": "Compiled implementation of pretrain.data.loader, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/manifest.cpython-311-darwin.so": [
+      {
+        "sha256": "8453abe8013dca04ec2c76fff804c0204eb43cf8c2ae29c537e0f17cf2925d4a",
+        "reason": "Compiled implementation of pretrain.data.manifest, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/manifest.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "a7b33a06f9b285d12a70bb2ed51fb412a522db06a81b778a0e937306a8af3a0e",
+        "reason": "Compiled implementation of pretrain.data.manifest, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/mix_sampler.cpython-311-darwin.so": [
+      {
+        "sha256": "ab8b5f1e70fc694f233ff57ea32ac83827a40387bc46f758faef732e158d501a",
+        "reason": "Compiled implementation of pretrain.data.mix_sampler, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/mix_sampler.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "00d28be1cf49767d5f73acd527fe85bd9f35c7d0e0fc43a5a33b653b9004ba7a",
+        "reason": "Compiled implementation of pretrain.data.mix_sampler, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/prepare.cpython-311-darwin.so": [
+      {
+        "sha256": "e801503014933c585ad361d059e99db9446db58379914fba9332ce756be17e49",
+        "reason": "Compiled implementation of pretrain.data.prepare, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/prepare.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "1a0c00a1787aff4ed98fc14ac93a20246c33c15f07f0f89ca539b3f48684b4f0",
+        "reason": "Compiled implementation of pretrain.data.prepare, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/tokenizer.cpython-311-darwin.so": [
+      {
+        "sha256": "de8ab9aa1c94382ddefea868c08a80f970aba508a35a7da6659e8a5c01b53a8f",
+        "reason": "Compiled implementation of pretrain.data.tokenizer, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/data/tokenizer.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "bbf74218e4706effb642eda0e1c433b49b7ea694c1c038a43b0b5c107b8f059e",
+        "reason": "Compiled implementation of pretrain.data.tokenizer, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "d392df08f10e0f51fafa10caac96a3236f4eb2b6d733d642e4709194a0f2a881",
+        "reason": "Compiled package initialiser for pretrain.eval, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "0cb240fa77baecb90b4ba4ed53b6a281e84969777dbfddd0665073d089848a8f",
+        "reason": "Compiled package initialiser for pretrain.eval, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/dclm_core.cpython-311-darwin.so": [
+      {
+        "sha256": "d170fc96b3440a07659b8b157586132f966193fc4db8118e20dc297a7bb3b253",
+        "reason": "Compiled implementation of pretrain.eval.dclm_core, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/dclm_core.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "c82258fccc9dae35d93d257a681ebc1a35182178e071f7e7b75f28db994da502",
+        "reason": "Compiled implementation of pretrain.eval.dclm_core, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/lm_eval_adapter.cpython-311-darwin.so": [
+      {
+        "sha256": "ba117c3050b7786a51578f12cf4102165a010847579f2ffb4c2d37d7d412b247",
+        "reason": "Compiled implementation of pretrain.eval.lm_eval_adapter, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/lm_eval_adapter.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "ca6943fa6e6a6ebf8a3a3593ea8ccf2ebff7b00f0ae3a01c7c43da11478d5633",
+        "reason": "Compiled implementation of pretrain.eval.lm_eval_adapter, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/olmes_runner.cpython-311-darwin.so": [
+      {
+        "sha256": "fdd0bfa5c04018f7e4f4b400a60588a35f790b305ad599974f967ec35c484e87",
+        "reason": "Compiled implementation of pretrain.eval.olmes_runner, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/olmes_runner.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "d702df9d49e48313f39c923806fe038dca809d198d3d4593aae85c1d7968344e",
+        "reason": "Compiled implementation of pretrain.eval.olmes_runner, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/perplexity.cpython-311-darwin.so": [
+      {
+        "sha256": "a9927127f8bf15dbef256aa383e89eeadf2c7d40e294c84f776303c81e3bf1b0",
+        "reason": "Compiled implementation of pretrain.eval.perplexity, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/eval/perplexity.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "48a8f4eae314e3be3bdc929adb51d8a036d26b5c55785586e07bc6418ad2a764",
+        "reason": "Compiled implementation of pretrain.eval.perplexity, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "5b0602b88ab212f5b5193096927491c0d93eb02ed7fa1143477dd08e7e0ed180",
+        "reason": "Compiled package initialiser for pretrain.model, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "9706c98f004135430709b417f264b303045ab4feb467193e11d37ae428e467c7",
+        "reason": "Compiled package initialiser for pretrain.model, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/fused_loss.cpython-311-darwin.so": [
+      {
+        "sha256": "43f348bdcc4d5a3755a72e464b161dde78b01a4cf6a302632d495397c5f2eaf9",
+        "reason": "Compiled implementation of pretrain.model.fused_loss, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "90fcc4d5da411d61adfc78ab25b5069a1b83129e6a41eb4ab6f44c899f5c17d4",
+        "reason": "Compiled implementation of pretrain.model.fused_loss, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/fused_loss.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "bf5571e097cef870e1571bd3e999a2692b4000fd629a1d199c4892082932ff1e",
+        "reason": "Compiled implementation of pretrain.model.fused_loss, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "e6c87970a6f1d2df7d6957f08abd1e9c53b34c9caf73fe772336351c63e395d2",
+        "reason": "Compiled implementation of pretrain.model.fused_loss, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/init.cpython-311-darwin.so": [
+      {
+        "sha256": "7b8a8e1637bbfa4e66ea2539022673829502b8cae1bfd2c5500efd8e0b04dc57",
+        "reason": "Compiled implementation of pretrain.model.init, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/init.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "feabb10cc8dd56491d574b8228c2f245635911cdac38022e4a4678e8f796e72b",
+        "reason": "Compiled implementation of pretrain.model.init, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/llama3.cpython-311-darwin.so": [
+      {
+        "sha256": "9297e16b2b2f137d8587f0091e57b62b875e16c7279b433abf9388550bd2bfe4",
+        "reason": "Compiled implementation of pretrain.model.llama3, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "1948a7eabce62d18c9c21a537bde12708f6329119983d62a15604ad2df5bc588",
+        "reason": "Compiled implementation of pretrain.model.llama3, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/llama3.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "8d187f755a9bd63636e94b272bfe28c29cdb22903da8c8985ff9236fcc247f91",
+        "reason": "Compiled implementation of pretrain.model.llama3, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "e22d9f33430ec14338425f10124a335c0357279055a26d91102a90ea316758a3",
+        "reason": "Compiled implementation of pretrain.model.llama3, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "22926fcd801ebbd6d952ab01757f9d8679611779666bd4b4a648dd1ef586713d",
+        "reason": "Compiled package initialiser for pretrain.model.modules, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "af3cd55d31e5f31441e03f2e9944a916d6695884993b1d39cbc088d68ef2cf2b",
+        "reason": "Compiled package initialiser for pretrain.model.modules, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/_linear.cpython-311-darwin.so": [
+      {
+        "sha256": "1a798556f9934e463603606c07a87d32a6ce9999fb52042ad10e8d59f1de3c55",
+        "reason": "Compiled implementation of pretrain.model.modules._linear, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/_linear.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "6e4a7eaa5eb3954bbfe249c81aa0a1c365ccaf5c24a59c0f6540081db791c818",
+        "reason": "Compiled implementation of pretrain.model.modules._linear, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/attention_repop.cpython-311-darwin.so": [
+      {
+        "sha256": "559897205ce7f2644f6892180c003826bd36258962a4792d5afcc04dcb802588",
+        "reason": "Compiled implementation of pretrain.model.modules.attention_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/attention_repop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "d716a7bb569cf1883643775ca3b262c575536fea9fb18f4f9af06dcbf9de28b5",
+        "reason": "Compiled implementation of pretrain.model.modules.attention_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/embedding_repop.cpython-311-darwin.so": [
+      {
+        "sha256": "03a12e3302b86df80e9a757417224b908e5f3827db5f004c06b3ad84253ed9ae",
+        "reason": "Compiled implementation of pretrain.model.modules.embedding_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/embedding_repop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "84ee864c06a8a74770cea4829b15229407939bc5e0449e31cc34a06eaac500d6",
+        "reason": "Compiled implementation of pretrain.model.modules.embedding_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/ffn_repop.cpython-311-darwin.so": [
+      {
+        "sha256": "38308f7dd94fcd359075e0d9efa36e0b4f70f48e49666d7cd939cae732a877f8",
+        "reason": "Compiled implementation of pretrain.model.modules.ffn_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/ffn_repop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "d80b325f68c05878cd7ce98b3829667d9797a68d6a617152c6e8d9613d7e8a9b",
+        "reason": "Compiled implementation of pretrain.model.modules.ffn_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/norm.cpython-311-darwin.so": [
+      {
+        "sha256": "4da26371a552a05172b70f706446d9867adbf7e1d05de4066600cb1aafe99355",
+        "reason": "Compiled implementation of pretrain.model.modules.norm, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/norm.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "a97df57d0916ca5b3f0dbbec12ed5939770a2f403cbad5932e967885fc6a6427",
+        "reason": "Compiled implementation of pretrain.model.modules.norm, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/norm_repop.cpython-311-darwin.so": [
+      {
+        "sha256": "c2e1fea7ff886693b5460d864e9d58ecca5a0e981536fc187f92b426b797003f",
+        "reason": "Compiled implementation of pretrain.model.modules.norm_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/norm_repop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "92af347d4bfb6188bef0872858fd877b0fb355c6629d939ee1931cda529dfa02",
+        "reason": "Compiled implementation of pretrain.model.modules.norm_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/qat_warmstart.cpython-311-darwin.so": [
+      {
+        "sha256": "68e07144f5937c8d5e86501bb011edfb28763fec0b660bebb1d73870d5a40046",
+        "reason": "Compiled implementation of pretrain.model.modules.qat_warmstart, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/qat_warmstart.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f5295cbbf8dc0905f150c2371753e6fbbdf08eb5ba437217c62eb285add1f942",
+        "reason": "Compiled implementation of pretrain.model.modules.qat_warmstart, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/rope.cpython-311-darwin.so": [
+      {
+        "sha256": "7e28125f481286cc841c7b938476483e6ecefa73cc7ea36804ab53c4185b5b25",
+        "reason": "Compiled implementation of pretrain.model.modules.rope, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/modules/rope.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "c71e39d7d6c4e033efc611826bcaf376b325fbd2ed6387ab98bade6a03cf29e8",
+        "reason": "Compiled implementation of pretrain.model.modules.rope, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/precision.cpython-311-darwin.so": [
+      {
+        "sha256": "84893077d525b5d4f16cceda131439ababa7d83fe86916f26bc485e7c31e9246",
+        "reason": "Compiled implementation of pretrain.model.precision, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/precision.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "bfd8af842f5673df6daad0b3e8d48e266c6929eeb857f5cb85ae9f9f95b89947",
+        "reason": "Compiled implementation of pretrain.model.precision, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/registry.cpython-311-darwin.so": [
+      {
+        "sha256": "2a6659e672abc5add746a021360e67706f6e76c8668371856981b488f62db892",
+        "reason": "Compiled implementation of pretrain.model.registry, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/registry.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "489dce2043ff0094ce6588420723430cba6c1c4c694069da32ada134d6c9bff7",
+        "reason": "Compiled implementation of pretrain.model.registry, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/z_loss.cpython-311-darwin.so": [
+      {
+        "sha256": "98bb006e82b90a52c7e013c87e52a0e04c356db24b712f0d29064caa06532de6",
+        "reason": "Compiled implementation of pretrain.model.z_loss, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/z_loss.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "444d60eec1ee38cdd33382fe8c9cde2e850414a3fb7cb5ab429f967f52181f13",
+        "reason": "Compiled implementation of pretrain.model.z_loss, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/obs/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "a84e046ac0641ca713f2466cd5b94dd3a08be6750bf83afeef30f0be221ef00d",
+        "reason": "Compiled package initialiser for pretrain.obs, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/obs/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "859b94897eee98855c56412c0dd06f3ac164f8a50263c662a1b2cd0247ec0cd6",
+        "reason": "Compiled package initialiser for pretrain.obs, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/obs/metrics.cpython-311-darwin.so": [
+      {
+        "sha256": "096c9285d4430d0ba17d09e957139645bd8cd1b4655ffc1789d7211fa3ae95bf",
+        "reason": "Compiled implementation of pretrain.obs.metrics, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/obs/metrics.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "fb4404ffc9bcbf39c1729ff9e0009113d9c731612732a706a9c177f66c7ae525",
+        "reason": "Compiled implementation of pretrain.obs.metrics, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/obs/wandb_run.cpython-311-darwin.so": [
+      {
+        "sha256": "500f4df31ef46f551d0aa75aaa65f4e135c81c3e592db3eb0e243b2796ac6243",
+        "reason": "Compiled implementation of pretrain.obs.wandb_run, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/obs/wandb_run.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "7b7427c06cd0802f2be56d9c7bfd9a707fd997b410982a7a1cd9bec2a1d1b4c9",
+        "reason": "Compiled implementation of pretrain.obs.wandb_run, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "5008491d6307ead29718233abdee9cf665319d82c93df247c9fe059e91ab1e28",
+        "reason": "Compiled package initialiser for pretrain.optim, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "3eccc124088125ea09bdab7a3fe0ea9345e7dc237bd173b5244166ebf608be63",
+        "reason": "Compiled package initialiser for pretrain.optim, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/adamw.cpython-311-darwin.so": [
+      {
+        "sha256": "818f04db4780d5b922befa12a4c41c29681448b96522d09f047b1b9179744cc7",
+        "reason": "Compiled implementation of pretrain.optim.adamw, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/adamw.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "9c76c8bd0b5496d62dad29a239338b3ffdfa5fa140c532a539fb2c3aeff8beb1",
+        "reason": "Compiled implementation of pretrain.optim.adamw, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/adamw_repop.cpython-311-darwin.so": [
+      {
+        "sha256": "d8481fc0da7a7dc6b543043e859b2332194af92562c3abd1f96de963dce1e563",
+        "reason": "Compiled implementation of pretrain.optim.adamw_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/adamw_repop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "2a21cf662345dbf29f9d955d652de9df7f9384cb706d3a7fe6b29c2c9b8c3b2f",
+        "reason": "Compiled implementation of pretrain.optim.adamw_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/muon.cpython-311-darwin.so": [
+      {
+        "sha256": "47f7f8eac42fe9bcce24b92e72a97b6043529b356c8bad0c0a0ac2d775838ce4",
+        "reason": "Compiled implementation of pretrain.optim.muon, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/muon.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "b106a4c8e29dba6985d288497c0984eb58e7a611c5499aa1eb3d2d932ca4e461",
+        "reason": "Compiled implementation of pretrain.optim.muon, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/registry.cpython-311-darwin.so": [
+      {
+        "sha256": "b9a093b84c583e072f9359cfbec503ebab440a837228b1ac4377de09a8a71c90",
+        "reason": "Compiled implementation of pretrain.optim.registry, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/registry.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "9a2fd4ef2ef945421a7f7cbc3ce0a743888f63e5b615fc35027548d85baa4829",
+        "reason": "Compiled implementation of pretrain.optim.registry, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/schedules.cpython-311-darwin.so": [
+      {
+        "sha256": "57f10b3e9f60dfa339c34204368beb4fcf4c10e0874609a835f18ea0b8926737",
+        "reason": "Compiled implementation of pretrain.optim.schedules, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/optim/schedules.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "057709d8b0a2d7219cab37e286880296cfed39012c63cc4c84417b6adc765b50",
+        "reason": "Compiled implementation of pretrain.optim.schedules, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "2d19388641d2708e2f699c8df699e7b94e0ae3b60fb1a29ff37cb90b2f37a252",
+        "reason": "Compiled package initialiser for pretrain.parallel, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "1fd63b1ef6ef0ba775d370fa0d4fae865811d40628d83f416880c31492dc35f8",
+        "reason": "Compiled package initialiser for pretrain.parallel, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/deterministic_reduce.cpython-311-darwin.so": [
+      {
+        "sha256": "db7d65c0218da03b56d18ff7b76aa2f8c09b9257710fe7fbdd0e1b7b1abf47c2",
+        "reason": "Compiled implementation of pretrain.parallel.deterministic_reduce, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/deterministic_reduce.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "2713cb6dd9872c040ed0444791ac7e73825ea9b52756c0ced3ee399c2a822954",
+        "reason": "Compiled implementation of pretrain.parallel.deterministic_reduce, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/env.cpython-311-darwin.so": [
+      {
+        "sha256": "06e70fcf16fcf48a038f3677559fbd74df2435907565f766a2e0ffbc5e475b80",
+        "reason": "Compiled implementation of pretrain.parallel.env, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/env.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "257be96e2ccac9697f6d422f63559aeff5cc2ccf21012b5d1a4f17b32535e388",
+        "reason": "Compiled implementation of pretrain.parallel.env, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/fsdp.cpython-311-darwin.so": [
+      {
+        "sha256": "4562efb707f5c078da5282b80e9cdfeb69612aac27e274887ef0d3983a7ae422",
+        "reason": "Compiled implementation of pretrain.parallel.fsdp, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/fsdp.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f8a0b63f3383127406568e9115c92230ceb79e0074ffca04a2ee461d319c92db",
+        "reason": "Compiled implementation of pretrain.parallel.fsdp, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/parallel_dims.cpython-311-darwin.so": [
+      {
+        "sha256": "ec42ab25cf54298679ad97e9d87e6e649a156f3005889b43f6d34498b22d0009",
+        "reason": "Compiled implementation of pretrain.parallel.parallel_dims, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/parallel_dims.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "9c96b8aa1b4e1c9d082f87958d69e03f7f4c0529ef822ee8270d53e67db7ae25",
+        "reason": "Compiled implementation of pretrain.parallel.parallel_dims, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/parallelize_llama3_repop.cpython-311-darwin.so": [
+      {
+        "sha256": "35488f304ea71dc0b62f220cf41da23c8a80cad6afcaf59cd69a8882b2ef302d",
+        "reason": "Compiled implementation of pretrain.parallel.parallelize_llama3_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "30cef55306300db16314345349d1631654d8da9f6113b02fe5d44bfc8468adbe",
+        "reason": "Compiled implementation of pretrain.parallel.parallelize_llama3_repop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/parallel/parallelize_llama3_repop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "da56d499abdb005832be47160e368e9015523b2a2b9a530e88abedb81d3770bb",
+        "reason": "Compiled implementation of pretrain.parallel.parallelize_llama3_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "8b2dd5df8ab8f2bb29aa651f1a39d979e7fcfa1800287f8ecda6d72dd80f7046",
+        "reason": "Compiled implementation of pretrain.parallel.parallelize_llama3_repop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "ac72a4cc20bee84e78481197c2b12fa1a6f05e04e3a95b2255034018d524c325",
+        "reason": "Compiled package initialiser for pretrain.train, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "561775fdb715b6315102b7099c3de99c5a49fde91d5241bcccd2b453fad0396a",
+        "reason": "Compiled package initialiser for pretrain.train, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/batch_schedule.cpython-311-darwin.so": [
+      {
+        "sha256": "3dccd03d600898dd93a214b5c8191eb8cdf44f6d3bfef88aeca41b0bdfa5b25d",
+        "reason": "Compiled implementation of pretrain.train.batch_schedule, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/batch_schedule.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "7ee846faa5149e6e641f034c7c8d9e86e3e49d40719c633add8b5b8111bafc33",
+        "reason": "Compiled implementation of pretrain.train.batch_schedule, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/checkpoint.cpython-311-darwin.so": [
+      {
+        "sha256": "83a94b2567377d030514ce08e92b1872e66f34b380feed571fc978c606c4f416",
+        "reason": "Compiled implementation of pretrain.train.checkpoint, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/checkpoint.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "8f995901f11ce99c8f94eba9664e17041ef1faad0a7f73fe9de477a51088f15e",
+        "reason": "Compiled implementation of pretrain.train.checkpoint, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/global_clip.cpython-311-darwin.so": [
+      {
+        "sha256": "b4b005071c75a1ba0567ae4834aaa647d232c926cfad3b5f2d8ac7a07b9e3a69",
+        "reason": "Compiled implementation of pretrain.train.global_clip, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/global_clip.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "2fdb57041547f3e5ac0366aeac0aa4e99cd4cedf3fb34054df166fb2c0b71d0b",
+        "reason": "Compiled implementation of pretrain.train.global_clip, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/loop.cpython-311-darwin.so": [
+      {
+        "sha256": "d1a6f9f0eb79aaa99144da547e670fea670b2e211b56f436f47f2083ce90c324",
+        "reason": "Compiled implementation of pretrain.train.loop, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/loop.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "c289aef66e1cdd49eceb1a183853cc306ca67a108fcd96e8fd862177f9bc4e87",
+        "reason": "Compiled implementation of pretrain.train.loop, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/midtrain.cpython-311-darwin.so": [
+      {
+        "sha256": "4a8d47ec9275fadf2080ef2d969b7e2bf537df984040a069bdba08bf5ec5c502",
+        "reason": "Compiled implementation of pretrain.train.midtrain, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/midtrain.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "414b27ddddc0e3cab6440feab5586484694ee2ee3c424f81017f709c3a0d1822",
+        "reason": "Compiled implementation of pretrain.train.midtrain, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/qk_gain_control.cpython-311-darwin.so": [
+      {
+        "sha256": "4ef727941a57b6617a3725f17b89d0a647546392897bc2153f5a145077da72e4",
+        "reason": "Compiled implementation of pretrain.train.qk_gain_control, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/qk_gain_control.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f5a826b796911ebfd47431dd8c592ef9d45a2f51b47bf77756fb30c8953de55f",
+        "reason": "Compiled implementation of pretrain.train.qk_gain_control, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/spike_protocol.cpython-311-darwin.so": [
+      {
+        "sha256": "066b1e82a82afb5e964af8cf8ec798bfb55db88835045012c5a7e590b346da4b",
+        "reason": "Compiled implementation of pretrain.train.spike_protocol, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/spike_protocol.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "6bd9f59019390af4cc33101e4d73fd0dd5af732876536f0a7260b5d7c5adf23b",
+        "reason": "Compiled implementation of pretrain.train.spike_protocol, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/state_hash.cpython-311-darwin.so": [
+      {
+        "sha256": "84150573178737f9109304430c89f9e74819a8c623ef7f7d005be33bbbfe4ad5",
+        "reason": "Compiled implementation of pretrain.train.state_hash, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "f27e126a01d996b6d02e1a7097509ffcda725918f0a814ea5be0385542186051",
+        "reason": "Compiled implementation of pretrain.train.state_hash, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/state_hash.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "92e04634dbf5efc6eab731ee593ba6de53f8e27a387cdb2b1f91793008c2a256",
+        "reason": "Compiled implementation of pretrain.train.state_hash, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "010e1f53b7f9ded62a802434778c483b310cbf00fa49706c126450a06fed14fe",
+        "reason": "Compiled implementation of pretrain.train.state_hash, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/util/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "4ecde5286745d4f5230bfc6e7133b9106dd25d207bc66309785d54c6354a8772",
+        "reason": "Compiled package initialiser for pretrain.util, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/util/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f100ac0e2d2c18fa93ea8a1bcdca544d397b93b50dceb467297d9d624a6aa240",
+        "reason": "Compiled package initialiser for pretrain.util, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/util/git.cpython-311-darwin.so": [
+      {
+        "sha256": "3835687e54d337814e30134d420d0845a9c3deb52b7044e1a216d5baaa79e4b8",
+        "reason": "Compiled implementation of pretrain.util.git, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/util/git.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "dd17f391d4a5eaeff9f3f38c6941d49e533315b720c81c51f98d98bcda76604e",
+        "reason": "Compiled implementation of pretrain.util.git, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/util/registry.cpython-311-darwin.so": [
+      {
+        "sha256": "7db905900a67f4af90d3c01b02585d9e4b798488768eefba5993727087f7eb96",
+        "reason": "Compiled implementation of pretrain.util.registry, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/util/registry.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "62f6306c7bb26b99b35449516a440615b590a7c98cce38c4c69993cd3e1dc762",
+        "reason": "Compiled implementation of pretrain.util.registry, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop-0.1.5.dist-info/LICENSE": [
+      {
+        "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+        "reason": "Licence text for the distribution, shipped so the published artifact carries its own terms."
+      }
+    ],
+    "repop-0.1.5.dist-info/METADATA": [
+      {
+        "sha256": "46869713d640a23c76168604a4485935676e753cf01811947941fdcec6d63c22",
+        "reason": "Standard wheel metadata carrying the distribution name, version and dependency pins. pip needs it to install the wheel and to resolve the environment an audit runs in."
+      }
+    ],
+    "repop-0.1.5.dist-info/WHEEL": [
+      {
+        "sha256": "8fca227abe2d6a42d455c15ccb4707fef53aff5e16fbd556bf35205d6375607a",
+        "reason": "Installer metadata declaring wheel format 1.0 and the platform tag cp311-cp311-linux_x86_64. pip needs it to install the wheel."
+      },
+      {
+        "sha256": "f182e2b88e94838b4c48bd9afc23a2fd6548abf8c31fd19ca3e3f952369c910e",
+        "reason": "Installer metadata declaring wheel format 1.0 and the platform tag cp311-cp311-macosx_14_0_arm64. pip needs it to install the wheel."
+      }
+    ],
+    "repop-0.1.5.dist-info/top_level.txt": [
+      {
+        "sha256": "8b2a8123c1f5beccf1cd5cca9f74e5e503a254c97e7da444b0cf14dc26be0728",
+        "reason": "Installer metadata listing the top-level packages the wheel claims (repop, tests)."
+      }
+    ],
+    "repop/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "8e0aa6eede3f6f0345ed500363b3aac8b890728e21354fd485e7a01998b8fbce",
+        "reason": "Compiled package initialiser for repop, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "bda6b573cf2c2c9832883b11690884951f88273ce7ca37899e302af1077af308",
+        "reason": "Compiled package initialiser for repop, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/_build_info.cpython-311-darwin.so": [
+      {
+        "sha256": "9143908d0cd05602123aac849450da2dc3c2a4a54aaf869888fbe3a3720b7e0c",
+        "reason": "Compiled implementation of repop._build_info, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "d9a51fc5ef14733c5a8cbe07dd42d3f93575419a6d6b2a0faf30726b093be5d0",
+        "reason": "Compiled implementation of repop._build_info, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/_build_info.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "656161ee27240a1898cdf3e4391d019b1704f585fcf44c37933919d9687d255b",
+        "reason": "Compiled implementation of repop._build_info, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "0beda32f34d1503e6fbbab0cd0dc4fc5124c72c4bcaa8c11871b1561f4000e84",
+        "reason": "Compiled implementation of repop._build_info, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/_build_info.json": [
+      {
+        "sha256": "122540645daeb7d59a01e7778d1d1e2533a92105f07bcc69cc452ccd087fc2b5",
+        "reason": "Build provenance stamp recording commit 646596fe0333e9ad2584b05285d8d1989454b07d with backends cpu, metal. The kit refuses a trajectory whose recorded commit disagrees with this value, so it is the field that ties the published wheel to the audited source."
+      },
+      {
+        "sha256": "6630c1d7cd5cc4c5f6ca71c0fb64b242fe97cf5ff31b115cd28e9b651c346771",
+        "reason": "Build provenance stamp recording commit 646596fe0333e9ad2584b05285d8d1989454b07d with backends cpu, cuda. The kit refuses a trajectory whose recorded commit disagrees with this value, so it is the field that ties the published wheel to the audited source."
+      },
+      {
+        "sha256": "8d53ce9a1add30695e4f7e2a9ca2513c8d828206ccf63f76812886c05c9e15b2",
+        "reason": "Build provenance stamp recording commit c9ca6e71e673660afc6c87de2592fa6f62c87b15 with backends cpu, metal. The kit refuses a trajectory whose recorded commit disagrees with this value, so it is the field that ties the published wheel to the audited source."
+      },
+      {
+        "sha256": "f2d0a3720d7b823ad898055b35c17ba0a8052c5a11db341086365debfd28000a",
+        "reason": "Build provenance stamp recording commit c9ca6e71e673660afc6c87de2592fa6f62c87b15 with backends cpu, cuda. The kit refuses a trajectory whose recorded commit disagrees with this value, so it is the field that ties the published wheel to the audited source."
+      }
+    ],
+    "repop/backend/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "5a368d022be4769690ea91ffa34dfbb9ff58ba7fa07843d34039d62343141608",
+        "reason": "Compiled package initialiser for repop.backend, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "b94d2d309866c2cefee08560d53739973b3ea1a25c7f6ad70c1d4cdf7f1b58b8",
+        "reason": "Compiled package initialiser for repop.backend, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/__init__.pyi": [
+      {
+        "sha256": "283622eb03005e0b98bd7c4032ca9a0ae941c9beca59cee09371f82d8acd0ba3",
+        "reason": "Typing stub declaring the native backend attributes (cpu, cuda) so a type checker can resolve repop.backend. It is a declaration only and contains no implementation."
+      }
+    ],
+    "repop/backend/cpu.cpython-311-darwin.so": [
+      {
+        "sha256": "ef9b7f74d3b33a1db6e1db251d82b07740bc918e089ae7d3c35565fae2118f3a",
+        "reason": "Compiled implementation of repop.backend.cpu, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "b2c756eeffe5c359d69ee5df32f47c9d07bd6f01bd58643465c68e669d7ce295",
+        "reason": "Compiled implementation of repop.backend.cpu, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/cpu.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "5e3708084d1a15a043a0c6f0e2b285b236a0715f386dfe9509462f38f17ee7b6",
+        "reason": "Compiled implementation of repop.backend.cpu, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "28e77d2138b8da1ce4d3b54a4703400d20740113830f106e8219f08488b3d5cf",
+        "reason": "Compiled implementation of repop.backend.cpu, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/cuda.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f41fe801147ba103cca25c4927cb7784d870d53ba020eb675798482248699303",
+        "reason": "Compiled implementation of repop.backend.cuda, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "1b617e2d3fe1b4339585d4d0374475a2c5fbef94908f47da58c96999e1ef504a",
+        "reason": "Compiled implementation of repop.backend.cuda, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/metal.cpython-311-darwin.so": [
+      {
+        "sha256": "8b67d2b809881f00a472897cdf740a10cced67be19c91649f529d6fc1a998d5d",
+        "reason": "Compiled implementation of repop.backend.metal, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "4b3294128aeb89b8b8b8893543601e6febee57b0f0ebe85d99d4c5d78167b220",
+        "reason": "Compiled implementation of repop.backend.metal, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/metal/default.metallib": [
+      {
+        "sha256": "522d5b4164128ca94c72169945ef7619d1cdcc51480fb78ec2499467610074ff",
+        "reason": "Precompiled Metal shader library holding every Metal kernel the backend compiles by default. The Metal backend loads it at runtime, so it is the GPU-side half of the implementation on macOS and is disclosed on the same footing as the CPython extensions, compiled and without shader source."
+      },
+      {
+        "sha256": "ac4569fe509c653b798dfa76b56a07f54aee297bb5084d99e0d74bf442844344",
+        "reason": "Precompiled Metal shader library holding every Metal kernel the backend compiles by default. The Metal backend loads it at runtime, so it is the GPU-side half of the implementation on macOS and is disclosed on the same footing as the CPython extensions, compiled and without shader source."
+      }
+    ],
+    "repop/backend/metal/int8_gemm_mpp.metallib": [
+      {
+        "sha256": "e45c3c864ab7dbab0328ee91db217fd01b688a8f897c888f25b554afab340522",
+        "reason": "Precompiled Metal shader library holding the int8_gemm_mpp kernel. The Metal backend loads it at runtime, so it is the GPU-side half of the implementation on macOS and is disclosed on the same footing as the CPython extensions, compiled and without shader source."
+      },
+      {
+        "sha256": "a3c72c05768a830050fd114eeddf96902ad5fb543aa01b4f8b33bf631e16a17b",
+        "reason": "Precompiled Metal shader library holding the int8_gemm_mpp kernel. The Metal backend loads it at runtime, so it is the GPU-side half of the implementation on macOS and is disclosed on the same footing as the CPython extensions, compiled and without shader source."
+      }
+    ],
+    "repop/backend/metal_stub.cpython-311-darwin.so": [
+      {
+        "sha256": "11b000f0bd79723c3bae7f2c01fc09b5e1f7eb10051f630b9c9203372ac0d8f2",
+        "reason": "Compiled implementation of repop.backend.metal_stub, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/backend/metal_stub.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "94ed07d23fae12390384c6cca3c585e07bcf962a00229837bdb82b6b4b97e047",
+        "reason": "Compiled implementation of repop.backend.metal_stub, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/func.cpython-311-darwin.so": [
+      {
+        "sha256": "5df89f32a551645a6ad711e66eccd91c23912ce8a7e781c3df3d65c44ad7b892",
+        "reason": "Compiled implementation of repop.func, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/func.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "a7e20dd04f3edd7258dd61a5a40b36b830fd9a52d7fb53725ebeaec9f715e3a5",
+        "reason": "Compiled implementation of repop.func, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "b6bcbd76a2c8b9282b810c703712df1f62240d3f269625cbc849c06768ddbe4d",
+        "reason": "Compiled package initialiser for repop.nn, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "dba24191560c5d51cc74a82853be6135b28013039e60dcb9d02eb6fcf209a863",
+        "reason": "Compiled package initialiser for repop.nn, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/activations.cpython-311-darwin.so": [
+      {
+        "sha256": "d2be332f6f139ac0f3edd894173dee4fc630e1c86928f2564b1e756ca6f3e8bb",
+        "reason": "Compiled implementation of repop.nn.activations, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/activations.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "3bc9328f50235bf5e8533a62ae23f190de2bcb3370629e669af761d212c7e868",
+        "reason": "Compiled implementation of repop.nn.activations, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/attention.cpython-311-darwin.so": [
+      {
+        "sha256": "c0c9e5cfa893a9e54b5b67d15c9df0a5e73897996c9b4360d1ad4e498743c2ef",
+        "reason": "Compiled implementation of repop.nn.attention, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/attention.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "02d1e1391c4902d324e403e480fe0b73030ed0a4322493525ec146e26ce6013e",
+        "reason": "Compiled implementation of repop.nn.attention, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/batchnorm.cpython-311-darwin.so": [
+      {
+        "sha256": "4d95b7a3807016c99eb12b6b561fb40679ac1bad4067f2ddc0351a7fbcc99900",
+        "reason": "Compiled implementation of repop.nn.batchnorm, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/batchnorm.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "393ccf2e4f1cb7474cec61a76c281bacf582b21e7ba4aee8c6864da7e3bc545a",
+        "reason": "Compiled implementation of repop.nn.batchnorm, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/conv.cpython-311-darwin.so": [
+      {
+        "sha256": "97988f4a8037e609d6ac9a394d4281fb8322691d6d59de755dd718b506cc9d4c",
+        "reason": "Compiled implementation of repop.nn.conv, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/conv.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "312125c21ba9e859240acef41e43a02cf2349a1ca5b68b1c5fbd4a15746a09a1",
+        "reason": "Compiled implementation of repop.nn.conv, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/cumsum.cpython-311-darwin.so": [
+      {
+        "sha256": "99c4209d67532781b221faa3529730bf59a507be6e06e0df0f185dd085dc9baa",
+        "reason": "Compiled implementation of repop.nn.cumsum, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/cumsum.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "694f3beaa55b7dd905fd059d2a2bbf7e12e1b50a0b2af08f923f71d82b283d4c",
+        "reason": "Compiled implementation of repop.nn.cumsum, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/dropout.cpython-311-darwin.so": [
+      {
+        "sha256": "3f8d7ba04cd8155bbbedf8f8cb0fce5a768c65bb68934ec25568f8e64eb24bc0",
+        "reason": "Compiled implementation of repop.nn.dropout, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/dropout.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "69bc218130a3e3026a8ec2c02a23659f1d3ced53e86e14d38987f2092663b5e5",
+        "reason": "Compiled implementation of repop.nn.dropout, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/embedding.cpython-311-darwin.so": [
+      {
+        "sha256": "458cd6b06dfb19ca8f60a8c76bd87b13edaf35c9bb10f6cae5f593c763432fff",
+        "reason": "Compiled implementation of repop.nn.embedding, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/embedding.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "e110a08488f16a1619626d858c18f941548cdf99dd3eeccfc649721176e4e3fd",
+        "reason": "Compiled implementation of repop.nn.embedding, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/flash_attention.cpython-311-darwin.so": [
+      {
+        "sha256": "08ed1a14db904d69bb22d5c894df6335c22479fa37bdd74dd68b585176305bf4",
+        "reason": "Compiled implementation of repop.nn.flash_attention, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "0ac95a382745d78416fcf5fcffca571672b4d3911dd5b37b03a69b812101708a",
+        "reason": "Compiled implementation of repop.nn.flash_attention, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/flash_attention.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "fc7e1209a9ced8c0510bb54e35995e8761bc53a2b9f3864d3fd20663331cee21",
+        "reason": "Compiled implementation of repop.nn.flash_attention, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "d562b5aca36e1c7b7d81d48f1af47ed7a057d3dd70b5d6346f020f4b517fc57f",
+        "reason": "Compiled implementation of repop.nn.flash_attention, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/functional.cpython-311-darwin.so": [
+      {
+        "sha256": "1472dbde9be3b233dd4473663f4d3fe50cb49346b01c6e49fa34e7d7a44a2e01",
+        "reason": "Compiled implementation of repop.nn.functional, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/functional.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "7923fd41f76dc0560531f6227b37b61c773f4781e1643d671e84bba160b5d6b7",
+        "reason": "Compiled implementation of repop.nn.functional, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/hadamard.cpython-311-darwin.so": [
+      {
+        "sha256": "4ca532d9367a58da6fac0d27a31dd0f6ba668e985df2d83e1e059e873c7118e1",
+        "reason": "Compiled implementation of repop.nn.hadamard, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/hadamard.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "e53ec314319a0452a8937fd1c755f645e20a29de09ac9970e0b97e84ca65301b",
+        "reason": "Compiled implementation of repop.nn.hadamard, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/layernorm.cpython-311-darwin.so": [
+      {
+        "sha256": "10508da1dd590e9b322f706ca86f84450affc7a73488d8db9c2919ee786ce7d7",
+        "reason": "Compiled implementation of repop.nn.layernorm, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/layernorm.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "614591c6e0111483ab69291c41c8e3871d798025e964e34ae77b9c3878bcf3a1",
+        "reason": "Compiled implementation of repop.nn.layernorm, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/linear.cpython-311-darwin.so": [
+      {
+        "sha256": "2866ed7f7b1798a61ef62a410ee10afc9eb23082190252b4ee0f18915a67a304",
+        "reason": "Compiled implementation of repop.nn.linear, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/linear.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "cd48573c1d52cbf71825b901a3804c62a7ca3ff9d3419b4861781e2cbed3c5cc",
+        "reason": "Compiled implementation of repop.nn.linear, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/llama_block.cpython-311-darwin.so": [
+      {
+        "sha256": "c8fae5f9be0815463e2003671ff19601514a7ea390d3abde11cc18afcdab41ab",
+        "reason": "Compiled implementation of repop.nn.llama_block, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/llama_block.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "6b58d2e3e869a38c5c16cb3681ba8adbbd2c8022f582037b0428239542981fab",
+        "reason": "Compiled implementation of repop.nn.llama_block, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/loss.cpython-311-darwin.so": [
+      {
+        "sha256": "5c83bab715c3718837408957186604a7e36a31a17fdbaf106cb32c8d50b3b3d2",
+        "reason": "Compiled implementation of repop.nn.loss, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/loss.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "24ae0e6fbbde14f05fd7522221ce52066f61e9fc9eafcdc549e9e9604b229203",
+        "reason": "Compiled implementation of repop.nn.loss, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/m3_slab_mlp.cpython-311-darwin.so": [
+      {
+        "sha256": "566045e9979f1e2d43378a2ade88efaec5a57d7cbfa6f1b9f3de83956b6cef96",
+        "reason": "Compiled implementation of repop.nn.m3_slab_mlp, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/m3_slab_mlp.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "37cf9d74aa053706ca56fd36dfbc686e5e766610c5cb79e33228e445f4dc2f8d",
+        "reason": "Compiled implementation of repop.nn.m3_slab_mlp, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/rmsnorm.cpython-311-darwin.so": [
+      {
+        "sha256": "d81cf1b48055dc53b838aad607cbe93cc54b719af5d4ccdeb83149a74e8370d0",
+        "reason": "Compiled implementation of repop.nn.rmsnorm, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/rmsnorm.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "79e39b6d787a57d5b5be81c4f1dbc4d6671bc54c8985ef39fdaad6fb9091e032",
+        "reason": "Compiled implementation of repop.nn.rmsnorm, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/rope.cpython-311-darwin.so": [
+      {
+        "sha256": "8303c0056b1b64a14a49e4662b70007d722519a20f11fceefa72092f6190ca58",
+        "reason": "Compiled implementation of repop.nn.rope, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/rope.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f4d1bf6e22c4f9e96d696691a7d5dd79afae47a65bf1b84af70206160694e7c3",
+        "reason": "Compiled implementation of repop.nn.rope, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/softmax.cpython-311-darwin.so": [
+      {
+        "sha256": "b694756e5928999b98a1bf1f1e46f2493e160829e703ca1fa68714aa6d0ce6db",
+        "reason": "Compiled implementation of repop.nn.softmax, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/nn/softmax.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "0a38210b3df7136fb4fc8be75dee79095ea9a3bb5bd9b8cad7bcd1e1c0f44121",
+        "reason": "Compiled implementation of repop.nn.softmax, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/ops.cpython-311-darwin.so": [
+      {
+        "sha256": "3260fecaa37d894681c4505b773719be0a68329413a8463f73bee08646d60bb2",
+        "reason": "Compiled implementation of repop.ops, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/ops.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "007784ee53f6d37c635dbcdf48086747b6aedcd98c874a5437c9a16e8643744f",
+        "reason": "Compiled implementation of repop.ops, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/optim.cpython-311-darwin.so": [
+      {
+        "sha256": "be5bb728893e602e01355084bfbaffb3629c250f2287306007ff14f76f096ff7",
+        "reason": "Compiled implementation of repop.optim, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/optim.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "eee7adf5c1a3a30fc98f6baebedd01d3bf0fe051a67917fd0d8674a1b44137c4",
+        "reason": "Compiled implementation of repop.optim, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "941c5bd82d14b7afbdbdf2c761c832db461f2308cf2b2540d35e77aa455dfa92",
+        "reason": "Compiled package initialiser for repop.qat, built as a native CPython extension for macOS arm64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "6dacbc26e4a523b82b92dd129e45c16848bed18ab3dd966c19dc61c546a89a1a",
+        "reason": "Compiled package initialiser for repop.qat, built as a native CPython extension for Linux x86-64. It makes the package importable; the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/functional.cpython-311-darwin.so": [
+      {
+        "sha256": "3cb0141cd3cad92c85bf465d3dcfe571b30e544f92d02c7a4e180b54cdf17e89",
+        "reason": "Compiled implementation of repop.qat.functional, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "67407c70e37138167c68e92f08b31b3d51becefe20df38f0f29187079c1d5bbe",
+        "reason": "Compiled implementation of repop.qat.functional, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/functional.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "c52200d07fd188bb0906e3ae095761eb5d150b0ea34955a0914113b18f27e842",
+        "reason": "Compiled implementation of repop.qat.functional, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "8a20b340a653bdfcba7e9c24332f516badd41124f9aa25e02c5bac2a1fde3203",
+        "reason": "Compiled implementation of repop.qat.functional, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/int8_attention.cpython-311-darwin.so": [
+      {
+        "sha256": "074a4980d6c0fdec8c0e9bf8d25f062d59d3201b08db63ff03b2d939c39b9c32",
+        "reason": "Compiled implementation of repop.qat.int8_attention, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/int8_attention.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "a4336046e5c0b28c2e9aa8cea0f7d1c88a69d068f7c1c51661b87f3575ab9444",
+        "reason": "Compiled implementation of repop.qat.int8_attention, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/int8_attention_stream.cpython-311-darwin.so": [
+      {
+        "sha256": "32c613e15405349a6b5dd4ec7f9f03c6087606a8fa1bdf98165f4e0c3a5cd9ca",
+        "reason": "Compiled implementation of repop.qat.int8_attention_stream, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/int8_attention_stream.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "b77c858d2d9db6d9f6dde1fcf87b499de8394b09e93fae4d698c9ab4d0d7b0dc",
+        "reason": "Compiled implementation of repop.qat.int8_attention_stream, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/linear.cpython-311-darwin.so": [
+      {
+        "sha256": "cc3c4d243b613a1e1f6c8868940c7ef685195d7648dfe79932ea24ad416d3e9e",
+        "reason": "Compiled implementation of repop.qat.linear, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/linear.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "758f7643c8a9895e3db011e30b41d29aca261ac9b2cddc8e60761c348718bdef",
+        "reason": "Compiled implementation of repop.qat.linear, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/lsq.cpython-311-darwin.so": [
+      {
+        "sha256": "fde5abf969394a5ed898549275a2eecccb3e61ece922be33f84bceed09fd85ad",
+        "reason": "Compiled implementation of repop.qat.lsq, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/lsq.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "bf1dfa010c25a39093be05437da4e6fb5fa0c8b8346db3d712e1ceb1a1e5f2ee",
+        "reason": "Compiled implementation of repop.qat.lsq, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/ste.cpython-311-darwin.so": [
+      {
+        "sha256": "126db9b4da70cbfca4d217e65c4802abdd623b7975552807153a96028e0b8c85",
+        "reason": "Compiled implementation of repop.qat.ste, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "5ec785c631b9369c7349161f4ef7fec13f47e129fff856c9bd684fd05f8f0988",
+        "reason": "Compiled implementation of repop.qat.ste, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/qat/ste.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f6b925c55518b516c7fe51d18d199aa3ef723e700992e9041e1b4f7be9c804d4",
+        "reason": "Compiled implementation of repop.qat.ste, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      },
+      {
+        "sha256": "9cb65309e5f8d2231a1e20a4d532f7d96ebd7b2349a8dbd2026936529fd3705f",
+        "reason": "Compiled implementation of repop.qat.ste, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/rand.cpython-311-darwin.so": [
+      {
+        "sha256": "6ed29dc0103895fd2c4e0724c09737324b85fdcb32045b670e28a4ddc3f6b2f9",
+        "reason": "Compiled implementation of repop.rand, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/rand.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "1f6c26fd33b585c0c7528c4b5c674ad06a4cba4d6baa569e0b16030b9d18d6d3",
+        "reason": "Compiled implementation of repop.rand, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/utils.cpython-311-darwin.so": [
+      {
+        "sha256": "a117102dadf4c95c5270df6e2ed86d43f743ffa35353f2593144d1ac9818de7a",
+        "reason": "Compiled implementation of repop.utils, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "repop/utils.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "91bb201b91329ad082ece44cc3809edc076ed8e3329a94091bbf290914612a61",
+        "reason": "Compiled implementation of repop.utils, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "tests/__init__.cpython-311-darwin.so": [
+      {
+        "sha256": "9dbd21c628778f7077be3c55c88718def72e1a9de1c833142d7b6bc53923835c",
+        "reason": "Package marker for repop's top-level tests package, compiled for macOS arm64 because setup.py calls find_packages() without excluding it. It carries no implementation and is a packaging artifact rather than an intended disclosure."
+      }
+    ],
+    "tests/__init__.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "6901f688cebe96cb837b55d87deb8c2ace5c861bd076351fc1202d9746122e82",
+        "reason": "Package marker for repop's top-level tests package, compiled for Linux x86-64 because setup.py calls find_packages() without excluding it. It carries no implementation and is a packaging artifact rather than an intended disclosure."
+      }
+    ],
+    "pretrain/cli/cpu_threads.cpython-311-darwin.so": [
+      {
+        "sha256": "5561f0e27b68b0291b735dac6df803da3f59a69d339237ab67902f0eb4d111ca",
+        "reason": "Compiled implementation of pretrain.cli.cpu_threads, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/streaming_head_loss.cpython-311-darwin.so": [
+      {
+        "sha256": "6282e856c60dbebee8b9a0d489e461904d66164b38a8824c6808b48635069553",
+        "reason": "Compiled implementation of pretrain.model.streaming_head_loss, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/mps_gradient_accumulation.cpython-311-darwin.so": [
+      {
+        "sha256": "120577546858c7da746422dd05dfdc76eb2bb32595e835775db8c6e4203959a0",
+        "reason": "Compiled implementation of pretrain.train.mps_gradient_accumulation, built as a native CPython extension for macOS arm64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/cli/cpu_threads.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "dbbdb735a92f03fc6caa5b89c36fd7f035831e2f12df20e2daf815ee21c33fd4",
+        "reason": "Compiled implementation of pretrain.cli.cpu_threads, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/model/streaming_head_loss.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "f9fac8d7130e81483e4b913cf8045e288bc9a9a8c63bb3ceb6f01dae6c53b3bd",
+        "reason": "Compiled implementation of pretrain.model.streaming_head_loss, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ],
+    "pretrain/train/mps_gradient_accumulation.cpython-311-x86_64-linux-gnu.so": [
+      {
+        "sha256": "7e356222b803c809d54c9a157fc1bb31f9229bf9ff3a3834eecedc2bc89ac6f4",
+        "reason": "Compiled implementation of pretrain.train.mps_gradient_accumulation, built as a native CPython extension for Linux x86-64. Publishing the implementation an auditor executes is the purpose of the kit, and the wheel carries no source or bytecode for it."
+      }
+    ]
+  }
+}

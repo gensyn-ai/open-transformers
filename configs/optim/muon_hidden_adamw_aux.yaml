@@ -1,0 +1,14 @@
+# Muon-hybrid: Muon on 2D hidden weights, AdamW on everything else.
+# Off by default; bake-off only on 1B proxy (ADR-004).
+name: muon_hybrid
+betas: [0.9, 0.95]
+eps: 1.0e-8
+weight_decay: 0.1
+fused: true
+peak_lr: 3.0e-4
+no_decay_param_names:
+  - .bias
+  - norm.weight
+  - .rope_
+  - q_norm.weight
+  - k_norm.weight

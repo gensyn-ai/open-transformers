@@ -1,0 +1,13 @@
+# AdamW routed through repop's bitwise-reproducible C++/CUDA kernel.
+name: adamw_repop
+betas: [0.9, 0.95]
+eps: 1.0e-8
+weight_decay: 0.1
+fused: false
+peak_lr: 3.0e-4
+no_decay_param_names:
+  - .bias
+  - norm.weight
+  - .rope_
+  - q_norm.weight
+  - k_norm.weight

@@ -1,0 +1,51 @@
+# Recipe v1 — token-mix proportional to what is actually on disk.
+#
+# Reworked 2026-06-11 against the corpus actually present on the shared
+# volume (data/shards/, the ~0.5T web-heavy re-pull). On-disk token counts,
+# summed from each source's manifest.yaml (sum of per-shard token_count):
+#
+#   dclm_baseline          300.51 B   (240.0 M docs, ~1252 tok/doc)
+#   fineweb_edu             59.77 B   ( 59.5 M docs, ~1005 tok/doc)
+#   stack_v2_permissive     54.19 B   ( 27.4 M docs, ~1978 tok/doc)
+#   proof_pile_2            36.01 B   (  5.3 M docs, ~6743 tok/doc)
+#   ──────────────────────────────
+#   total                  450.48 B
+#
+# This pull is DCLM-dominant (67% of the mix) and web-heavy — the inverse
+# of the previous 1.39 T pull this file documented (which was Stack-heavy
+# at 50%). Downstream evals will favour MMLU / commonsense over the
+# Stack/HumanEval tilt of the old weights.
+#
+# CYCLING WARNING: only 450.48 B tokens exist on disk, but train.total_tokens
+# is 500 B (configs/train/1b_repop.yaml). At these proportional shares every
+# source lands at ~111% epoch coverage — i.e. ~11% of every source is
+# repeated. Weights can't fix this (it's a data-shortfall vs. run-length
+# issue): to avoid repetition, either lower total_tokens to ≤450 B or pull
+# more data. If repetition is unacceptable, do not use this recipe as-is.
+#
+# `weights_are_token_shares: true` makes each `weight` a fraction of
+# training tokens (not a per-doc sampling probability). The loader
+# converts to doc-probabilities using each manifest's
+# `total_tokens / total_documents`. See src/pretrain/data/loader.py
+# (`build_loader`) for the conversion and src/pretrain/config/schema.py
+# (`DataConfig.weights_are_token_shares`) for the field docs.
+
+weights_are_token_shares: true
+
+sources:
+  - name: dclm_baseline
+    path: data/shards/dclm_baseline
+    weight: 0.6671        # 300.51 / 450.48
+  - name: fineweb_edu
+    path: data/shards/fineweb_edu
+    weight: 0.1327        # 59.77 / 450.48
+  - name: stack_v2_permissive
+    path: data/shards/stack_v2_permissive
+    weight: 0.1203        # 54.19 / 450.48
+  - name: proof_pile_2
+    path: data/shards/proof_pile_2
+    weight: 0.0799        # 36.01 / 450.48
+
+seq_len: 4096
+document_separator_id: 0
+pack_strategy: concat_eos

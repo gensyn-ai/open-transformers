@@ -1,0 +1,21 @@
+__pycache__/
+node/
+.claude/
+.pytest_cache/
+.venv/
+/data/
+runs/
+debug/
+# Cluster deployment manifests are environment-specific and kept local rather
+# than published; write your own for your deployment.
+/copy_node.yaml
+/dev_pod*.yaml
+/h100x*.yaml
+/head.yaml
+/job_eval*.yaml
+/prep_*.yaml
+/pvc_*.yaml
+
+# Team names the audit-kit disclosure gate matches on; see
+# scripts/audit_kit/disclosure_names.txt.example
+/scripts/audit_kit/disclosure_names.txt
