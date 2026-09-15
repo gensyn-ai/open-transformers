@@ -71,6 +71,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 from typing import Any, Mapping
 
 import torch
@@ -316,6 +317,19 @@ def compute_state_hash(
 
 _SCHEMA_V3 = b"pretrain.state_hash.v3\n"
 
+# On-device per-tensor digests (repop tree-BLAKE2b). When enabled,
+# local_shard_state_digest feeds each shard's 32-byte device-computed tree
+# digest into the host chain instead of streaming the shard's raw bytes
+# through a host blake2b — removing the D2H copy + host hashing that dominate
+# per-step hash cost at scale (measured 37 s/step at 8B dp_shard=8, ~1.2 s
+# on-device; 5.9 s at 1B). The tree construction (4 KiB leaves, fanout 128,
+# domain-separated prefixes) is bitwise-identical on cpu/cuda/metal, so the
+# single-device audit reproduces these digests under the same flag. The
+# resulting chain values are NOT comparable to v3 chains — finalize folds
+# _SCHEMA_V4_DEV so the two can never be confused.
+_DEVICE_HASH = os.environ.get("PRETRAIN_STATE_HASH_DEVICE", "0") == "1"
+_SCHEMA_V4_DEV = b"pretrain.state_hash.v4-devhash\n"
+
 
 def _local_logical(t: torch.Tensor) -> torch.Tensor:
     """This rank's local Shard(0) shard with the FSDP2 tail padding STRIPPED —
@@ -354,13 +368,22 @@ def _local_logical(t: torch.Tensor) -> torch.Tensor:
 
 def _feed_local(h: Any, tag: bytes, t: torch.Tensor) -> None:
     """Like :func:`feed_tensor` but ``t`` is already this shard's local slice — no
-    ``full_tensor()`` collective. Hashes dtype, shape and raw bytes."""
+    ``full_tensor()`` collective. Hashes dtype, shape and raw bytes — or,
+    under ``PRETRAIN_STATE_HASH_DEVICE=1``, the shard's repop tree-BLAKE2b
+    digest computed on the shard's own device (only 32 bytes cross to host).
+    """
     h.update(tag)
     h.update(str(t.dtype).encode("utf-8"))
     h.update(b"\0")
     h.update(str(tuple(t.shape)).encode("utf-8"))
     h.update(b"\0")
-    h.update(tensor_bytes(t))
+    if _DEVICE_HASH:
+        import repop.ops as repop_ops
+
+        h.update(b"treeb2b\0")
+        h.update(bytes(repop_ops.tree_blake2b(t.detach().contiguous()).cpu().tolist()))
+    else:
+        h.update(tensor_bytes(t))
 
 
 def local_shard_state_digest(
@@ -506,7 +529,7 @@ def finalize_state_hash(
             f"shard_state_digest must be {_DIGEST_SIZE} bytes, got {len(shard_state_digest)}"
         )
     h = hashlib.blake2b(digest_size=_DIGEST_SIZE)
-    h.update(_SCHEMA_V3)
+    h.update(_SCHEMA_V4_DEV if _DEVICE_HASH else _SCHEMA_V3)
     h.update(b"prev\0")
     h.update(_coerce_prev(prev_hash))
     h.update(b"shard_state\0")
