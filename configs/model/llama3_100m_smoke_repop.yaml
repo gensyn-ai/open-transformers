@@ -1,0 +1,40 @@
+# 100M Llama 3 smoke shape on the repop runtime. Attention / FFN / RMSNorm /
+# LM-head matmuls go through repop's reproducible C++ kernels.
+name: llama3_100m_smoke_repop
+n_layers: 6
+d_model: 768
+n_heads: 12
+n_kv_heads: 4
+head_dim: 64
+ffn_intermediate: 2048
+vocab_size: 128256
+max_seq_len_pretrain: 2048
+rope_theta: 500000.0
+rms_norm_eps: 1.0e-5
+qk_norm: true
+# gain-free QK-norm (v2 recipe) — regression covers the no-γ model path.
+qk_norm_gain: false
+# Hybrid sliding-window attention (matches the canonical llama3_1b_proxy_repop
+# model). swa_full_every=5 => the last layer of each group of 5 is full-causal,
+# the rest use a 512-key sliding window. With n_layers=6 the smoke model still
+# exercises BOTH paths (layer 4 full-causal via repop causal_flash_attention,
+# layers 0-3,5 sliding-window) so the regression suite covers them.
+swa_window: 512
+swa_full_every: 5
+# Route attention P@V through repop's int8-PV flash kernel (int8 tensor cores,
+# BFR) — same as canonical. Set false to fall back to the bf16 FMA flash.
+attn_int8_pv: true
+# RMSNorm on the embedding output — off in canonical (1b_proxy/1b_repop leave it
+# off even with QAT on), kept off here to match the production op set exactly.
+emb_norm: false
+init:
+  std: 0.02
+z_loss:
+  enabled: true
+  coeff: 1.0e-5
+modules:
+  attention: gqa_qknorm_repop
+  ffn: swiglu_repop
+  norm: rmsnorm_repop
+  rope: rope_default
+  embedding: untied_repop

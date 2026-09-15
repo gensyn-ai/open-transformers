@@ -1,0 +1,4 @@
+# Cosine with linear warmup; cycle length matches the token budget (Chinchilla §5).
+name: cosine
+warmup_steps: 2000
+min_lr_frac: 0.10

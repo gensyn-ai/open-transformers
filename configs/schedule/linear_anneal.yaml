@@ -1,0 +1,10 @@
+# Midtraining anneal (OLMo 2, 2501.00656 §4.1): hold peak until
+# anneal_start_tokens (the pretrain branch point, ABSOLUTE tokens), then
+# decay linearly to min_lr_frac * peak at train.total_tokens. Pair with
+# --resume-from; the resume guard (pretrain.train.midtrain) enforces that
+# anneal_start_tokens matches the checkpoint's consumed_tokens. Set
+# optim.peak_lr to the pretrain LR at the branch point.
+name: linear_anneal
+warmup_steps: 0
+min_lr_frac: 0.0
+anneal_start_tokens: 0   # override per run: branch checkpoint's consumed_tokens

@@ -1,0 +1,108 @@
+[project]
+name = "pretrain"
+version = "0.1.0"
+description = "Reproducible LLM pretraining and audit-replay harness"
+# Not README.md: this wheel is published world-readable as part of an audit
+# kit, and a wheel's readme is embedded verbatim into its METADATA, which is
+# served from the public bucket.
+# README-dist.md is written for the verifier who installs this wheel.
+readme = "README-dist.md"
+# The audit kit puts this wheel in front of people who have no relation to
+# Gensyn, so the wheel must carry an explicit grant to run it. Apache 2.0
+# permits verification, research and commercial use alike, and its patent
+# grant matters for a harness we ask strangers to run. LICENSE.md is the
+# upstream apache.org text byte for byte; do not edit it.
+license = "Apache-2.0"
+license-files = ["LICENSE.md"]
+requires-python = ">=3.10"
+
+# In production we run inside the NGC PyTorch container, which already pins
+# torch / transformer-engine / flash-attn / NCCL via the image digest. The
+# pyproject.toml below intentionally does NOT pin torch — pip-installing torch
+# on top of the container would shadow the tested wheel.
+#
+# For local CPU dev (Mac, no-GPU CI), use `uv sync --extra dev` which pulls
+# in a CPU-only torch wheel. The dev extra is for unit tests that don't need
+# GPUs (data prep, schedules, mix sampler, model shapes on tiny configs).
+dependencies = [
+    "hydra-core==1.3.2",
+    "omegaconf==2.3.0",
+    "pydantic==2.9.2",
+    "numpy>=1.26,<3.0",
+    "pyarrow==17.0.0",
+    "tokenizers==0.20.3",
+    "datasets==3.0.1",                  # data prep / staging only; not in hot path
+    "zstandard>=0.22",                  # DCLM-Baseline ships .jsonl.zst; datasets needs this codec
+    "boto3>=1.34",                      # Stack v2 content lives in s3://softwareheritage/ (anonymous)
+    "google-cloud-storage>=2.14",       # audit-data fetch: pull one interval's shards from the GCS mirror
+    "wandb==0.20.0",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+    "rich>=13.7",                       # CLI output only
+    "safetensors>=0.4",                 # audit-handoff gradients sidecar + dcp_safetensors converter CLI
+]
+
+[project.optional-dependencies]
+# CPU-only torch for local dev/test, pinned to match the training container
+# (NGC 26.0x ships torch 2.11). Matching the major/minor matters for the
+# cross-device regression gate (local CPU audit):
+# the local repop CPU backend is rebuilt against this torch and must reproduce
+# the cluster's bits. In the container the system torch is used and this extra
+# is irrelevant.
+dev = [
+    "torch>=2.11,<2.12",
+    "pytest>=8.0",
+    "pytest-xdist>=3.5",
+]
+
+# Eval harness — heavy deps; install only on eval boxes.
+# 0.4.3 is what ai2-olmes pins (see src/pretrain/eval/olmes_runner.py for the
+# pinned commit); 0.4.4 is the dclm_core runner's pin. Both work with our
+# adapters, but the two eval paths must each get the version they expect.
+eval = [
+    "lm-eval>=0.4.3,<0.4.5",
+]
+
+[project.scripts]
+pretrain-train = "pretrain.cli.train:main"
+pretrain-prepare-data = "pretrain.cli.prepare_data:main"
+pretrain-eval = "pretrain.cli.eval:main"
+pretrain-eval-olmes = "pretrain.cli.eval_olmes:main"
+pretrain-inspect-checkpoint = "pretrain.cli.inspect_checkpoint:main"
+pretrain-audit-replay = "pretrain.cli.audit_replay:main"
+pretrain-audit-verify-handoff = "pretrain.cli.verify_handoff:main"
+pretrain-fetch-audit-data = "pretrain.cli.fetch_audit_data:main"
+pretrain-dcp-safetensors = "pretrain.cli.dcp_safetensors:main"
+pretrain-dump-doc-map = "pretrain.cli.dump_doc_map:main"
+pretrain-dump-documents = "pretrain.cli.dump_documents:main"
+
+[build-system]
+requires = ["hatchling==1.27.0", "setuptools==75.8.2", "wheel==0.48.0", "Cython==3.1.2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pretrain"]
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "hatch_build.py"
+
+# Ship the config tree inside the wheel (resolved by config/load.py as the
+# last-resort configs dir), so `pretrain-audit-replay --config-name ...` works
+# from a bare pip install — the audit kit's "no source checkout" contract.
+[tool.hatch.build.targets.wheel.force-include]
+"configs" = "pretrain/_configs"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-ra"
+markers = [
+    "gpu: requires a CUDA GPU",
+    "distributed: requires torch.distributed (multi-rank)",
+    "slow: longer than 30s",
+]
+
+[tool.uv]
+# Default index works fine for arm64 / x86_64 CPU torch wheels.
+# CUDA wheels (linux x86_64) use the same index since PyTorch 2.6.
+index-url = "https://pypi.org/simple"

@@ -1,0 +1,14 @@
+# multi-node 4 × H100 
+run_id: ""              # filled at launch by scripts/launch_single_node.sh
+seed: 42
+output_dir: runs
+nproc_per_node: 4
+dp_shard_size: 4
+dp_replicate_size: 8
+parallel: fsdp          # "fsdp" | "ddp" — override at CLI for DDP runs
+mixed_precision: true   # bf16 autocast + FSDP2 bf16 policy; flip to false for fp32
+activation_checkpoint: true
+ac_every_other_block: false
+
+# Topology-invariant gradient reduction (auditable). "nccl" opts out for throughput.
+reduction_mode: deterministic_allgather

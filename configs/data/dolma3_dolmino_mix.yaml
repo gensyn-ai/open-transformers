@@ -1,0 +1,48 @@
+# Dolma3-Dolmino full annealing mixture — allenai/dolma3_dolmino_mix-100B-1125,
+# INGREDIENT1 (the complete one; ingredient2 is missing tinymath-pot).
+# "The high-quality pool of data considered for the second stage of Olmo 3
+# 32B" training: 23 sources spanning math (synthetic), code, QA (synthetic),
+# reasoning (synthetic), instruction-tuning (synthetic), and natural web/PDF
+# data — NOT a math-only subset (the OLMo 2 dolmino-mix-1124 recipe this
+# replaced restricted to just the math component; see git history for that
+# version if you need to reproduce it). ~100B tokens; the repo publishes no
+# exact per-source doc/token count.
+#
+# No component reweighting needed at pull time (unlike the old recipe's
+# hand-derived per-component doc-share weights): this ingredient IS AI2's
+# own pre-built, already-proportioned mixture — pulling every file under
+# data/ingredient1-*/ whole reproduces it directly
+# (scripts/build_corpus.py, pull_dolma3_dolmino_mix).
+#
+# The shards MUST come from a globally-shuffled raw pull (build_corpus does
+# this automatically since the SHUFFLED_SOURCES change): the sampler permutes
+# at shard granularity, so shards built from the block-ordered raw are
+# component-pure and the stream sees homogeneous stretches (the loss_ce
+# square wave; docs/midtraining_math.md "Component blocking"). The puller
+# itself also round-robins across all ~146 source directories at pull time
+# (coarser than the raw-level shuffle, but a second line of defense).
+#
+# Pull + shard (MUST use the same tokenizer.json as the pretrain corpus —
+# nothing on the loader path validates tokenizer_hash across sources):
+#
+#   python scripts/build_corpus.py --shard-suffix '' \
+#       --only dolma3_dolmino_mix --docs-dolma3 999999999999
+#
+# CYCLING: at ~100B tokens this mixture is ~10x the old math-only subset
+# (~10.7B). A midtraining budget of 10B tokens (the current default, see
+# configs/train/1b_midtrain_math.yaml) touches only ~10% of it in one
+# pass — no cycling within a single epoch at that budget, unlike the old
+# recipe where cycling was the expected/beneficial case (OLMo 2 §4.4.2).
+# Raise MIDTRAIN_TOKENS well past ~100B before cycling becomes a concern
+# again.
+
+weights_are_token_shares: true
+
+sources:
+  - name: dolma3_dolmino_mix
+    path: data/shards/dolma3_dolmino_mix
+    weight: 1.0
+
+seq_len: 4096
+document_separator_id: 0
+pack_strategy: concat_eos

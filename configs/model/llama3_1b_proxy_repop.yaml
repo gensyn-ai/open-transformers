@@ -1,0 +1,42 @@
+# 1B proxy with the model wired through the repop runtime.
+# Attention / FFN / RMSNorm / LM-head matmuls go through repop's
+# reproducible C++ kernels.
+name: llama3_1b_proxy_repop
+n_layers: 24
+d_model: 2048
+n_heads: 16
+n_kv_heads: 4
+head_dim: 128
+ffn_intermediate: 5632
+vocab_size: 128256
+max_seq_len_pretrain: 4096
+rope_theta: 500000.0
+rms_norm_eps: 1.0e-5
+qk_norm: true
+# Hybrid sliding-window attention via repop causal_flash_attention.
+# 4:1 = 4 sliding-window (512-key) layers per 1 full-causal layer; with
+# n_layers=24 the full-causal layers are 4, 9, 14, 19.
+swa_window: 512
+swa_full_every: 5
+# Route attention P@V through repop's int8-PV flash kernel (int8 tensor
+# cores, BFR) instead of the bf16 FMA flash. Set false to fall back.
+attn_int8_pv: true
+# RMSNorm on the embedding output — fix for the LSQ-int8-QAT grad-norm blow-up.
+# Off by default; turn on for QAT runs.
+emb_norm: false
+# int8 QAT is enabled per train-config, not here in the shared model config.
+# LSQ QAT is FSDP2/HSDP-safe, so both the single-GPU run
+# (configs/train/1b_proxy_repop.yaml) and the multi-node distributed run
+# (configs/train/1b_repop.yaml) turn it on via their own `model.qat` blocks. (absmax QAT and any TP run remain gated
+# in pretrain.parallel.parallelize_llama3_repop.)
+init:
+  std: 0.02
+z_loss:
+  enabled: true
+  coeff: 1.0e-5
+modules:
+  attention: gqa_qknorm_repop
+  ffn: swiglu_repop
+  norm: rmsnorm_repop
+  rope: rope_default
+  embedding: untied_repop

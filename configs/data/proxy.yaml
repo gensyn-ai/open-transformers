@@ -1,0 +1,17 @@
+# Smaller-volume mix for the 1B proxy. Same recipe weights, smaller shards.
+sources:
+  - name: dclm_baseline
+    path: data/shards/dclm_baseline_proxy
+    weight: 0.75
+  - name: fineweb_edu
+    path: data/shards/fineweb_edu_proxy
+    weight: 0.12
+  - name: stack_v2_permissive
+    path: data/shards/stack_v2_permissive_proxy
+    weight: 0.10
+  - name: proof_pile_2
+    path: data/shards/proof_pile_2_proxy
+    weight: 0.03
+seq_len: 4096
+document_separator_id: 0
+pack_strategy: concat_eos

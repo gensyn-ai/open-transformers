@@ -1,0 +1,85 @@
+# @package _global_
+# 100-step cross-backend BFR divergence probe, built on 100m_smoke_repop.
+#
+# Purpose: run 100 real optimizer steps of the canonical smoke op-set (repop
+# AdamW + LSQ int8 QAT + hybrid SWA + int8-PV attention, bf16 mixed precision)
+# and hash the full state (weights + AdamW moments + grads + batch, chained)
+# after EVERY step. Run on the Spark (CUDA) via pretrain.cli.train, then replay
+# init->100 on this Mac (Metal) via pretrain.cli.audit_replay --from-init
+# --device mps --state-hash-log, and diff the two per-step hash logs to find
+# the first step (if any) where CUDA and Metal diverge.
+#
+#   Spark (CUDA):
+#     torchrun --standalone --nproc-per-node=1 -m pretrain.cli.train \
+#         --config-name 100m_smoke_repop_100step run.run_id=bfr100_cuda
+#     -> runs/bfr100_cuda/logs/state_hashes.jsonl  (per-step, CUDA)
+#     -> runs/bfr100_cuda/checkpoints/step_000000100/  (+ state_hash_init.txt)
+#
+#   Mac (Metal), against the copied-over CUDA run dir:
+#     python -m pretrain.cli.audit_replay --from-init --device mps \
+#         --checkpoint runs/bfr100_cuda/checkpoints/step_000000100 \
+#         --until-step 100 --state-hash-log runs/bfr100_mps/state_hashes.jsonl
+#
+#   Compare: the two state_hashes.jsonl files must agree step for step —
+#     any differing hash is a FAIL (diff them, or join on the step field).
+defaults:
+  - /model: llama3_100m_smoke_repop
+  - /data: synthetic
+  - /optim: adamw_repop
+  - /schedule: cosine
+  - /run: single_node_8xh100
+  - _self_
+
+train:
+  # 100 steps at a constant 16384 tokens/step (M=16, accum=16 at dp_world=1).
+  total_tokens: 1_638_400
+  seq_len: 512
+  micro_batch_size: 2
+  global_batch_tokens:
+    warmup: 16_384
+    main: 16_384
+    late: 16_384
+  warmup_to_main_at_tokens: 0
+  main_to_late_at_tokens: 0
+  grad_clip: 1.0
+  # One checkpoint at the final step (= the audit target) keeps disk small; the
+  # per-step hashes come from state_hashes.jsonl, not from checkpoints.
+  ckpt_every_steps: 100
+  ckpt_every_tokens: 1_638_400
+  # Spike protocol constructed but never enforced within 100 steps (start_step
+  # past the run) so the divergence probe isn't perturbed by skip decisions.
+  spike:
+    grad_norm_threshold: 75.0
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 200
+    start_step: 100000
+  # The crux: hash after EVERY step, include grads, and record the init hash so
+  # audit_replay --from-init can verify init and chain the first step exactly.
+  state_hash:
+    every_n_steps: 1
+    at_init: true
+    include_grads: true
+
+data:
+  seq_len: 512
+
+model:
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    scale_refresh_every_n_steps: 1
+
+run:
+  nproc_per_node: 1
+  mixed_precision: true                   # bf16 params (FSDP2) + autocast
+  activation_checkpoint: true
+  reduction_mode: deterministic_allgather # required for single-device audit_replay
+
+logging:
+  wandb_project: pretrain-smoke-repop
+  metrics_jsonl_path: logs/metrics.jsonl

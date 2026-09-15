@@ -1,0 +1,36 @@
+# Web-heavy 0.5T mix (2026-06-02). Corpus was re-pulled scaled-down to
+# match these token shares exactly, so each source is consumed at ~one
+# epoch with no cycling:
+#
+#   dclm_baseline          300 B   (60%)
+#   stack_v2_permissive    100 B   (20%)
+#   fineweb_edu             60 B   (12%)
+#   proof_pile_2            40 B   ( 8%)
+#   ──────────────────────────────
+#   total                  500 B   (= 0.5 T)
+#
+# `weights_are_token_shares: true` makes each `weight` a fraction of
+# training tokens (not a per-doc sampling probability); the loader
+# converts to doc-probabilities via each manifest's
+# total_tokens / total_documents. See src/pretrain/data/loader.py.
+#
+# Paths point to per-source directories of .bin/.idx shards written by
+# the data prep CLI (`pretrain.cli.prepare_data`).
+weights_are_token_shares: true
+
+sources:
+  - name: dclm_baseline
+    path: data/shards/dclm_baseline
+    weight: 0.60
+  - name: fineweb_edu
+    path: data/shards/fineweb_edu
+    weight: 0.12
+  - name: stack_v2_permissive
+    path: data/shards/stack_v2_permissive
+    weight: 0.20
+  - name: proof_pile_2
+    path: data/shards/proof_pile_2
+    weight: 0.08
+seq_len: 4096
+document_separator_id: 0
+pack_strategy: concat_eos
