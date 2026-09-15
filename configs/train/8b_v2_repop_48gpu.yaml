@@ -1,0 +1,109 @@
+# @package _global_
+# 8B DENSE on 6 nodes (48 GPUs).
+#
+# Recipe is the 1B v2 run (configs/train/1b_repop_v2.yaml) scaled to 8B, so a
+# 1B-vs-8B comparison is not also an accidental recipe comparison. Batch
+# schedule and topology are copied verbatim from the 1B v2 run, which is proven
+# at exactly this shape (6 nodes x 8 GPUs, dp_replicate=6 x dp_shard=8).
+#
+# PROJECTED COST (from the 1B run's measured 50.6 TFLOP/s/GPU):
+#   compute  ~94 s/step at 4.72M tokens
+#   cross-node reduce ~13 s/step  (8.03B/8 x 4 B x 6 butterfly steps = 24.1 GB
+#                                  per rank at the measured 1.83 GB/s)
+#   => ~107 s/step, ~44k tokens/s, ~14.5 days for 55B tokens.
+#
+# NOTE ON 6 NODES: dp_replicate=6 is NOT a power of two, so the deterministic
+# cross-replica butterfly costs 6 steps rather than log2(P). At 8 nodes it would
+# be 3 steps and the cross-node term would halve to ~7 s. At 64 GPUs prefer
+# 8 nodes — faster per step AND more total compute.
+defaults:
+  - /model: llama3_8b_v2_repop
+  - /data: recipe_v1_proportional
+  - /optim: adamw_repop
+  - /schedule: cosine
+  - /run: multi_node_4xh100
+  - _self_
+
+optim:
+  # 3e-4 rather than the 1B's 4.5e-4. Llama-3 8B used 3e-4 at a much larger
+  # batch; larger models want a lower peak at a fixed batch, and the 1B's 4.5e-4
+  # was itself sqrt-scaled up for its 48-GPU doubled batch. Same batch here as
+  # the 1B run, 5x the parameters, so scaling down is the conservative direction.
+  peak_lr: 3.0e-4
+  eps: 1.0e-8
+  no_decay_param_names:
+    - .bias
+    - norm.weight
+    - .rope_
+    - q_norm.weight
+    - k_norm.weight
+    - tok_embeddings      # no WD on the input embedding (OLMo 2)
+    - weight_scale        # LSQ step sizes are 1-D anyway; explicit for clarity
+
+schedule:
+  warmup_steps: 667
+  rewarm_tokens: 0
+
+train:
+  resume_reset_optimizer: false
+  # 55B tokens gives the run a defined endpoint.
+  total_tokens: 55_000_000_000
+  seq_len: 4096
+  micro_batch_size: 4
+  # M = ceil(global_batch_tokens / (micro_batch_size * seq_len)) and is
+  # WORLD-SIZE-INDEPENDENT by construction (microbatches_per_step has no
+  # world-size term), so the data stream and token accounting are identical at
+  # any topology and in the single-device audit. M %% dp_world_size == 0 is
+  # therefore an EFFICIENCY requirement, not a correctness or auditability one:
+  # accum_for_rank hands the remainder to the lowest M %% world ranks, so an
+  # indivisible M just makes every rank wait on the ranks doing one extra
+  # micro-batch. Chosen divisible at 48 GPUs:
+  global_batch_tokens:
+    warmup: 3_145_728   # M=192 (48*4),  accum=4
+    main:   4_718_592   # M=288 (48*6),  accum=6
+    late:   9_437_184   # M=576 (48*12), accum=12
+  # IF THIS IS MOVED TO 8 NODES / 64 GPUs (see the manifest header — the cluster
+  # is exactly 8 H100 nodes, so 64 is what comes free if the 1B run is stopped,
+  # and dp_replicate=8 halves cross-node volume vs 6), the schedule above is
+  # valid but WASTEFUL: 288 = 4*64 + 32, so half the ranks do 5 micro-batches
+  # and half do 4 — a step costs 5 while doing 4.5 worth of work (~11% lost).
+  # Use these instead (M divisible by 64), and note the main batch changes, so
+  # it is a different recipe rather than the same run on more GPUs:
+  #   warmup: 3_145_728   # M=192 (64*3), accum=3   <- unchanged, already divisible
+  #   main:   4_194_304   # M=256 (64*4), accum=4
+  #   late:   8_388_608   # M=512 (64*8), accum=8
+  warmup_to_main_at_tokens: 4_000_000_000
+  main_to_late_at_tokens: 50_000_000_000
+  ckpt_every_steps: 100
+  spike:
+    grad_norm_threshold: 5.0
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 100
+    start_step: 667      # = end of warmup
+  grad_clip: 1.0
+  dead_tensor_assert_steps: 100
+  state_hash:
+    every_n_steps: 1
+  grad_norm_log:
+    every_n_steps: 1
+    weight_stats_every_n_steps: 100
+
+model:
+  # int8 QAT, identical block to the 1B v2 run, so both runs operate at bf16
+  # activations AND int8 weights/activations.
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    scale_refresh_every_n_steps: 1
+
+run:
+  mixed_precision: true
+
+logging:
+  wandb_project: pretrain-8b-v2-dense
+  metrics_jsonl_path: logs/metrics.jsonl
