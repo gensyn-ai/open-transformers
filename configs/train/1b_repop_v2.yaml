@@ -1,0 +1,105 @@
+# @package _global_
+# 1B proxy, v2 — COLD START with the full 20260703 incident recipe baked in.
+#
+# Differences from 1b_repop (each traces to a demonstrated failure; see the
+# recovery artifact + docs/audit-replay-usage.md):
+#   * GLOBAL grad-norm clipping (clip_algo="global", train.grad_clip) —
+#     stateless, so it cannot freeze tensors (no absorbing clipper state),
+#     cannot crawl behind a legitimate regime change, and has no persistent
+#     state to grind into fp32 subnormals (the MPS audit break, steps
+#     12,500–50,221).
+#   * GAIN-FREE QK-norm (model.qk_norm_gain=false) — unit-RMS q/k with no
+#     learnable γ, so the γq⊙γk attention temperature that drove the
+#     20260703 entropy collapse (product 19.5 → 28+ unbounded) does not
+#     exist. Fallback if attention proves too soft: logit softcapping.
+#   * DEAD-TENSOR ASSERTION (train.dead_tensor_assert_steps) — a parameter
+#     with EXACTLY zero gradient for N consecutive steps hard-fails instead
+#     of training silently for 50k steps (the original sin).
+#   * SPIKE THRESHOLD 75 → 5 — 75 never fired through an entire entropy
+#     collapse and a 53%-clip burst regime. 5 ≈ 30× the healthy grad-norm MA
+#     (~0.16): fires on real spikes, not on recovery transients (peak 1.17).
+#   * WEIGHT-SIDE TELEMETRY ON (weight_stats_every_n_steps) — per-param
+#     weight norms (dead-tensor / pure-decay detector) from step 0. The
+#     QK-gain gauge logs nothing under gain-free (no gains to gauge).
+#   * SAME SEED (42, from the run yaml) — the canonical stream makes this
+#     run's first ~12k steps a batch-identical A/B against the original
+#     frozen-q run: the loss delta measures what the freeze cost.
+#
+# DELIBERATELY UNCHANGED: AdamW eps stays 1e-8 (raised back from 1e-15 by the
+# 2026-07 "increase eps like olmo2" decision — revisit only with kernel-level
+# verification at 1e-15); z-loss 1e-4; QK-norm itself ON; LSQ int8 QAT recipe
+# and int8-PV attention; no-decay groups (q/k_norm.weight entries are now
+# inert under gain-free — kept so this config also parses gained models).
+defaults:
+  - /model: llama3_1b_proxy_repop
+  - /data: recipe_v1_proportional
+  - /optim: adamw_repop
+  - /schedule: cosine
+  - /run: multi_node_4xh100
+  - _self_
+
+optim:
+  peak_lr: 4.5e-4
+  eps: 1.0e-8
+  no_decay_param_names:
+    - .bias
+    - norm.weight
+    - .rope_
+    - q_norm.weight
+    - k_norm.weight
+    - tok_embeddings
+
+schedule:
+  warmup_steps: 667
+  rewarm_tokens: 0
+
+train:
+  resume_reset_optimizer: false
+  total_tokens: 400_000_000_000
+  seq_len: 4096
+  micro_batch_size: 4
+  global_batch_tokens:
+    warmup: 3_145_728   # M=192 (48*4),  accum=4
+    main:   4_718_592   # M=288 (48*6),  accum=6
+    late:   9_437_184   # M=576 (48*12), accum=12
+  # warmup->main stays ABSOLUTE at 4B (it is an early-stability threshold,
+  # not a schedule fraction); main->late scales with the 500B->400B budget
+  # cut to keep the late-phase bump at the same 90%-of-run point.
+  warmup_to_main_at_tokens: 4_000_000_000
+  main_to_late_at_tokens: 360_000_000_000
+  ckpt_every_steps: 100
+  spike:
+    grad_norm_threshold: 5.0
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 100
+    start_step: 1000
+  grad_clip: 1.0
+  dead_tensor_assert_steps: 100
+  state_hash:
+    every_n_steps: 1
+  grad_norm_log:
+    every_n_steps: 1
+    weight_stats_every_n_steps: 100
+
+model:
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    scale_refresh_every_n_steps: 1
+  attn_int8_pv: true
+  emb_norm: true
+  qk_norm_gain: false
+  z_loss:
+    coeff: 1.0e-4
+
+run:
+  mixed_precision: true
+
+logging:
+  wandb_project: pretrain-1b-repop
+  metrics_jsonl_path: logs/metrics.jsonl

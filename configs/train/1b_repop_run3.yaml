@@ -1,0 +1,113 @@
+# @package _global_
+# 1B proxy on the repop runtime.
+defaults:
+  - /model: llama3_1b_proxy_repop
+  - /data: recipe_v1_proportional
+  - /optim: adamw_repop
+  - /schedule: cosine
+  - /run: multi_node_4xh100
+  - _self_
+
+# Peak-LR rescale for the 48-GPU doubled-accum batch (overrides /optim:
+# adamw_repop's 3.0e-4 for THIS config only — the shared optim file is untouched
+# so other runs keep their tuning). The main-phase global batch is now 4.72M
+# tokens (M=288, accum=6 at dp_world=48 — double the prior M=144/accum=3). LR
+# scales UP with the batch: from the 3.2e-4 tuned for the M=144 batch, sqrt-
+# scaling the 2x doubling gives 3.2e-4 * sqrt(2) ≈ 4.53e-4 → 4.5e-4. (Linear
+# scaling would give 6.4e-4; sqrt is the conservative choice. Smaller power-of-2
+# topologies override these back at launch.)
+optim:
+  peak_lr: 4.5e-4
+
+# Keep the LR warmup at its tuned token-duration. schedules.py is token-clocked,
+# so cosine DECAY and peak_lr need no adjustment for the batch change — but the
+# LR warmup is warmup_tokens = warmup_steps * global_batch_tokens.warmup, which
+# scales with the warmup batch. With the doubled warmup batch (now 3.15M) hold
+# the tuned ~2.10B-token warmup constant: 2.097B / 3_145_728 = 667 steps. (This
+# stays well under the 4B warmup_to_main_at_tokens batch-ramp boundary — LR
+# finishes warming up at ~2.10B before the batch ramps at 4B.)
+schedule:
+  warmup_steps: 667
+
+train:
+  total_tokens: 500_000_000_000
+  seq_len: 4096
+  micro_batch_size: 4
+  # Global batch (tokens/optimizer-step), ramped by phase. These convert to a
+  # microbatch count M = tokens / (micro_batch_size * seq_len) = tokens / 16384,
+  # distributed round-robin across the dp world (dp_replicate * dp_shard); the
+  # per-rank grad-accum is accum = M / dp_world.
+  # At dp_world=48 (6 pods x 8) M MUST be a multiple of 48 or the microbatches
+  # spread unevenly (some ranks do one extra → idle bubble; worst in warmup).
+  # 48 * 16384 = 786_432 tokens per even microbatch round, so M is a multiple of
+  # 48 here: warmup M=192, main M=288, late M=576 — i.e. accum 4/6/12, DOUBLE
+  # the prior M=96/144/288 (accum 2/3/6). peak_lr scales up with the batch and
+  # warmup_steps down (see the optim/schedule overrides above). The ~half-as-many
+  # steps shift the step-keyed spike windows too (halved below). Smaller power-of-2
+  # topologies override all of these back at launch.
+  global_batch_tokens:
+    warmup: 3_145_728   # M=192 (48*4),  accum=4
+    main:   4_718_592   # M=288 (48*6),  accum=6
+    late:   9_437_184   # M=576 (48*12), accum=12
+  warmup_to_main_at_tokens: 4_000_000_000
+  main_to_late_at_tokens: 450_000_000_000
+  # Checkpoint purely on a STEP cadence, set EQUAL to state_hash.every_n_steps
+  # (200) so a ckpt step is always also a hash step: the post-step canonical hash
+  # materializes the full model (collective full_tensor()) and the checkpoint
+  # reuses that one materialization. The loop, audit_replay, and the audit-data
+  # fetch are all step-aware when ckpt_every_steps > 0, so no token-based interval
+  # is needed (ckpt_every_tokens stays at its unused schema default).
+  ckpt_every_steps: 100
+  spike:
+    grad_norm_threshold: 75.0
+    # skip_steps_on_spike < halt_window_steps so the halt can actually fire.
+    # The old 50/50 made halting mathematically impossible — the run zombied
+    # (skipped forever) instead of paging. With noqat grads are small; this is
+    # now just a real-explosion / NaN backstop that can actually halt.
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    # Halved with the ~halved step count (doubled batch) so these step-keyed
+    # windows cover the same span in token-space as before. start_step=1000 ≈
+    # 3.15B tokens (same point as the old 2000 steps at the prior warmup batch).
+    halt_window_steps: 100
+    start_step: 1000
+  grad_clip: 1.0
+  state_hash:
+    every_n_steps: 1   # step-based: hash every 10 optimizer steps (all phases)
+  # Per-layer PRE-clip grad-norm diagnostic — off for production (the global
+  # grad_norm_pre_clip is still logged every step). Set >0 (e.g. 250) to
+  # re-enable per-layer monitoring; costs one full_tensor per param per hit.
+  grad_norm_log:
+    every_n_steps: 0
+
+# int8 weight QAT ENABLED via LSQ + dynamic weight-scale refresh every step.
+# History: every prior int8-weight variant blew up — LSQ @5260, absmax @252,
+# exempt-first-2-blocks only DELAYED it (@8367, blow-up moves to embeddings +
+# the next int8 block), MAD made it worse, emb_norm / lower-LR all only delayed.
+# Characterised root cause: the learned per-channel scale decouples from the
+# weights (Adam drifts the tiny scale-grad ~28x while weights grow ~3x),
+# collapsing them into ~1 bit of the grid until the STE weight-grad detonates.
+# scale_refresh_every_n_steps=1 re-pins each scale to
+# 2*mean|w|/sqrt(qmax) of the current weights every step, holding quant SNR ~
+# optimal — the mitigation under test here. If it still blows up, fall back to
+# noqat (bf16 linears + int8-PV attention) and pursue int8 weights as a later
+# QAT *fine-tune* phase from a converged bf16 checkpoint.
+model:
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    # Re-pin every LSQ per-channel weight_scale to the current weights every N
+    # optimizer steps (0 disables) to stop the from-scratch scale-runaway above.
+    scale_refresh_every_n_steps: 1
+
+run:
+  mixed_precision: true
+
+
+logging:
+  wandb_project: pretrain-1b-repop
+  metrics_jsonl_path: logs/metrics.jsonl

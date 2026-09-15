@@ -1,0 +1,7 @@
+# Warmup-Stable-Decay: warmup → constant → 10% decay tail. Available; not used
+# unless a mid-run anneal is planned (ADR-003).
+name: wsd
+warmup_steps: 2000
+min_lr_frac: 0.10
+wsd_decay_start_frac: 0.90
+wsd_decay_to_frac: 0.10

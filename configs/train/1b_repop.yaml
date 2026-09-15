@@ -1,0 +1,116 @@
+# @package _global_
+# 1B proxy on the repop runtime — COLD START (full reset from random init).
+#
+# HISTORY: this began as the "phase 2" resume config (resume model weights from
+# step 17000, reset the optimizer). On 2026-07-01 the original run was ABANDONED
+# in favour of a cold start from scratch, carrying forward the
+# stability recipe this config accreted. There is no RESUME_FROM: the model is
+# initialised from cfg.run.seed at step 0 and the optimizer is fresh by
+# construction (so resume_reset_optimizer is moot — left false).
+#
+# NO LR re-warm (rewarm_tokens=0). Standard warm-up (schedule.warmup_steps) from
+# step 0 handles the cold start; there is no mid-run moment reset to cushion, so
+# no separate re-warm ramp is needed. Keeps the audit simple (no LR-ramp anchor
+# to reproduce). The per-step grad-norm log + grad clip catch any early transient.
+#
+# STABILITY RECIPE (research: OLMo2 2501.00656, YuLan-Mini 2412.17743, Wortsman
+# 2309.14322) — the ingredients the original run lacked, which we bake in from
+# step 0 rather than bolting onto a near-spike checkpoint:
+#   * no weight decay on the INPUT token embedding. OLMo2: WD shrinks embeddings ->
+#     LayerNorm Jacobian ~1/||x|| -> large early-block grads (the block-0
+#     amplification we saw). Output/lm_head embedding keeps WD.
+#   * AdamW eps 1e-8 -> 1e-15 (YuLan-Mini / Wortsman).
+#   * z-loss 1e-4 (YuLan-Mini) to bound the final-softmax logit magnitude.
+#   * deterministic global grad-norm clipping (train.grad_clip), the default clip.
+#
+# NEXT LEVER: if the run still shows the embedding-growth instability, the
+# structural prevent-not-delay fix is emb_norm (RMSNorm on the embedding output).
+# It changes the forward pass, but from a cold start that is a clean modelling
+# choice (not a checkpoint-compat hazard) — flip model.emb_norm and restart.
+defaults:
+  - /model: llama3_1b_proxy_repop
+  - /data: recipe_v1_proportional
+  - /optim: adamw_repop
+  - /schedule: cosine
+  - /run: multi_node_4xh100
+  - _self_
+
+optim:
+  peak_lr: 4.5e-4
+  eps: 1.0e-8
+  # adamw_repop.yaml's list + the INPUT token embedding (OLMo2). Substring match;
+  # "tok_embeddings" hits the input embedding only — output/lm_head keeps WD.
+  # (A cold start builds the optimizer groups from scratch at init, so this
+  # grouping is applied cleanly from step 0.)
+  no_decay_param_names:
+    - .bias
+    - norm.weight
+    - .rope_
+    - q_norm.weight
+    - k_norm.weight
+    - tok_embeddings
+
+schedule:
+  warmup_steps: 667
+  # LR re-warm DISABLED (see header): standard warm-up from step 0 covers the
+  # cold start, and there is no mid-run moment reset to cushion. Keeps the audit
+  # simple. rewarm_tokens is a resume-only lever and stays 0 here.
+  rewarm_tokens: 0
+
+train:
+  # Cold start from random init — no resume, so the optimizer is fresh anyway.
+  # Left false (a true reset-on-resume is not what a cold start does; see header).
+  resume_reset_optimizer: false
+  total_tokens: 500_000_000_000
+  seq_len: 4096
+  micro_batch_size: 4
+  global_batch_tokens:
+    warmup: 3_145_728   # M=192 (48*4),  accum=4
+    main:   4_718_592   # M=288 (48*6),  accum=6
+    late:   9_437_184   # M=576 (48*12), accum=12
+  warmup_to_main_at_tokens: 4_000_000_000
+  main_to_late_at_tokens: 450_000_000_000
+  ckpt_every_steps: 100
+  spike:
+    grad_norm_threshold: 75.0
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 100
+    start_step: 1000
+  grad_clip: 1.0
+  state_hash:
+    every_n_steps: 1
+  # Per-layer grad-norm logging ON every step — the tool that localised the
+  # original run's instability to the embedding. Keep it on to watch the leading
+  # indicator from step 0.
+  grad_norm_log:
+    every_n_steps: 1
+
+# QAT ON from init (LSQ int8 weights + activations).
+model:
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    scale_refresh_every_n_steps: 1
+  attn_int8_pv: true
+  # emb_norm stays OFF here. It is the next lever (RMSNorm on the embedding
+  # output) if the run shows embedding-growth instability; from a cold start it
+  # is a clean modelling choice to flip on (see header).
+  emb_norm: true
+  # z-loss is DIFFERENTIABLE (the merged backward), so the coefficient is a live
+  # regularization strength. 1e-4 (YuLan-Mini) discourages the final-softmax
+  # activations from growing — the old 1e-5 default was ~10x too weak to
+  # bound the logit magnitude. enabled stays true (model yaml).
+  z_loss:
+    coeff: 1.0e-4
+
+run:
+  mixed_precision: true
+
+logging:
+  wandb_project: pretrain-1b-repop
+  metrics_jsonl_path: logs/metrics.jsonl

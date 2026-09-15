@@ -1,0 +1,92 @@
+# @package _global_
+# 100M smoke / regression model on the repop runtime.
+#
+# Brought up to the CANONICAL operation set (configs/train/1b_repop.yaml plus
+# the launch overrides): repop AdamW, LSQ int8 QAT with per-step scale refresh,
+# bf16 mixed precision, activation checkpointing, deterministic_allgather
+# reduction, hybrid SWA + int8-PV attention + qk-norm + z-loss (from the model
+# config). Sized to ~100M params and a fast 30-step run on 1-2 GPUs so the
+# end-to-end regression suite stays cheap:
+# checkpoints + state hashes land at steps 10/20/30.
+defaults:
+  - /model: llama3_100m_smoke_repop
+  - /data: synthetic
+  - /optim: adamw_repop          # was adamw_default — byte-exact BFR optimizer
+  - /schedule: cosine
+  - /run: single_node_8xh100
+  - _self_
+
+train:
+  # 15 steps at global_batch_tokens=16384 (= 245760 tokens). With ckpt every 5
+  # that's 3 checkpoints/run (steps 5/10/15) — enough to audit init->5 and 5->10
+  # and compare hashes, without the disk footprint of a longer run. seq_len 512
+  # keeps it fast; micro_batch 2 still exercises grad accumulation on 1-2 GPUs.
+  total_tokens: 245_760
+  seq_len: 512
+  micro_batch_size: 2
+  global_batch_tokens:
+    warmup: 16_384
+    main: 16_384
+    late: 16_384
+  warmup_to_main_at_tokens: 0
+  main_to_late_at_tokens: 0
+  # Checkpoint every 5 steps -> steps 5, 10, 15. State hashes are taken EVERY
+  # step (see state_hash below), so ckpt steps are a subset of hash steps — the
+  # production layout (hash every step, checkpoint periodically). Small intervals
+  # keep the single-device audit_replay cheap. (Batch is constant 16384/step, so
+  # ckpt_every_tokens 81920 == 5 steps exactly.)
+  ckpt_every_steps: 5
+  ckpt_every_tokens: 81_920  # audit/fetch interval hint (= 5 steps here)
+  grad_clip: 1.0
+  # Spike thresholds aligned with canonical 1b_repop, but start_step past the
+  # whole smoke run so the 30-step run never trips the protocol (it is still
+  # constructed and replayed by audit_replay, exercising that code path).
+  spike:
+    grad_norm_threshold: 75.0
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 200
+    start_step: 1000
+  # Bitwise state hashing: init hash + EVERY step (matches the production
+  # 1b_repop cadence; decoupled from the every-5 checkpoint cadence above). Every
+  # step being hash-due gives a canonical per-step chain the regression compares
+  # across runs and reproduces via audit_replay — and, crucially, lets the
+  # chained-audit leg hand off a checkpoint at step T+1 and continue to T+2
+  # (audit_replay --save-checkpoint-dir needs the target step to be hash-due to
+  # be a valid chain link). Checkpoints still land only at steps 5/10/15.
+  state_hash:
+    every_n_steps: 1
+    at_init: true
+    include_grads: true
+
+# int8 weight QAT via LSQ + per-step weight-scale refresh — identical block to
+# configs/train/1b_repop.yaml so the smoke run exercises the canonical quant
+# path. See the scale_refresh comments in src/pretrain/config/schema.py.
+data:
+  # Loader seq_len must match train.seq_len (enforced by the config validator).
+  seq_len: 512
+
+model:
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    scale_refresh_every_n_steps: 1
+    # bf16 warm-start mid-run flip, deliberately INSIDE the audited intervals:
+    # steps 1-7 run unquantized, LSQ enables at step 8 — so the 5→10 audit leg
+    # and the resume-from-5 leg both replay THROUGH the flip. Regression
+    # coverage for qat.enable_at_step (v2 recipe).
+    enable_at_step: 8
+
+run:
+  nproc_per_node: 1                       # overridden to 2 by the regression suite
+  mixed_precision: true                   # bf16 params (FSDP2) + autocast
+  activation_checkpoint: true             # exercise the AC path audit_replay reapplies
+  reduction_mode: deterministic_allgather # required for single-device audit_replay
+
+logging:
+  wandb_project: pretrain-smoke-repop
+  metrics_jsonl_path: logs/metrics.jsonl

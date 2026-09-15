@@ -1,0 +1,54 @@
+# @package _global_
+# 1B proxy on the repop runtime.
+defaults:
+  - /model: llama3_1b_proxy_repop
+  - /data: proxy
+  - /optim: adamw_repop
+  - /schedule: cosine
+  - /run: single_node_8xh100
+  - _self_
+
+train:
+  total_tokens: 20_000_000_000
+  seq_len: 4096
+  micro_batch_size: 4
+  global_batch_tokens:
+    warmup: 524_288
+    main: 1_048_576
+    late: 1_048_576
+  warmup_to_main_at_tokens: 2_000_000_000
+  main_to_late_at_tokens: 20_000_000_000
+  ckpt_every_tokens: 2_000_000_000
+  spike:
+    grad_norm_threshold: 75.0
+    # Same halt geometry as 1b_repop.yaml. The old 50/5/50 could never halt
+    # ((5-1)*50 = 200 fresh-event spacing > 50-step window) and the schema now
+    # rejects it, so this config did not load.
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 100
+    start_step: 2000
+  grad_clip: 1.0
+  state_hash:
+    every_n_steps: 50
+
+# int8 QAT lives in the train config, not the shared model config. This is the
+# single-GPU run. The distributed 1B run (1b_repop.yaml)
+# enables the same LSQ QAT in its own `model.qat` block — LSQ is FSDP2/HSDP-safe,
+# so it is no longer single-device-only.
+model:
+  qat:
+    enabled: true
+    method: lsq          # LSQQuantizedLinear (learned step size; BFR; from-scratch-friendly)
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true  # ignored by LSQ (always per-channel)
+
+run:
+  # Pure fp32: model, activations, gradients all in fp32. AdamW moments
+  # are fp32 regardless. Disables autocast and the FSDP2 bf16 policy.
+  mixed_precision: true
+
+logging:
+  wandb_project: pretrain-1b-repop
+  metrics_jsonl_path: logs/metrics.jsonl

@@ -1,0 +1,126 @@
+# @package _global_
+# Midtraining anneal for the 1B v2 run — the OLMo 2 midtraining recipe
+# (2501.00656 §4): branch from a pretrain checkpoint and anneal the LR
+# linearly to zero over ~10B tokens of the full Dolma3-Dolmino annealing
+# mixture (allenai/dolma3_dolmino_mix-100B-1125, ingredient1 — 23 sources:
+# math, code, QA, reasoning, instruction-tuning, natural web/PDF). Was
+# restricted to just the Dolmino MATH subset of the older dolmino-mix-1124
+# (OLMo 2 §4.4); see configs/data/dolma3_dolmino_mix.yaml for why that
+# subset recipe doesn't carry over to this dataset.
+#
+# Everything except {data, schedule, optim.peak_lr, the phase-boundary
+# fields} matches 1b_repop_v2 — same model, optimizer shape, batch schedule
+# and safety rails, so the checkpoint loads clean.
+#
+# THREE NUMBERS ARE COUPLED TO THE BRANCH CHECKPOINT — set all of them per
+# run (pretrain-inspect-checkpoint prints consumed_tokens; the resume guard
+# in pretrain.train.midtrain hard-fails on a mismatch):
+#   * schedule.anneal_start_tokens = checkpoint consumed_tokens
+#   * train.total_tokens           = anneal_start_tokens + midtrain budget
+#                                    (ABSOLUTE — the loop counts from the
+#                                    checkpoint, not from zero)
+#   * optim.peak_lr                = pretrain LR at the branch point (the
+#                                    cosine value at consumed_tokens; for a
+#                                    COMPLETED 400B 1b_repop_v2 run that is
+#                                    peak * min_lr_frac = 4.5e-4 * 0.1)
+# Defaults below assume branching at the END of the 400B pretrain.
+#
+# Launch:
+#   RESUME_FROM=runs/<pretrain-run>/checkpoints/step_NNNNNN \
+#     ./scripts/launch_single_node.sh 1b_midtrain_math
+#
+# Souping (paper §4.5): repeat with run.seed=43,44 (different data order)
+# and average the three final checkpoints — consistently equals or beats
+# the best single run.
+defaults:
+  - /model: llama3_1b_proxy_repop
+  - /data: dolma3_dolmino_mix
+  - /optim: adamw_repop
+  - /schedule: linear_anneal
+  # single_node, NOT 1b_repop_v2's multi_node_4xh100: that group pins the
+  # 48-GPU layout (dp_replicate 8 x dp_shard 4) and asserts on any other
+  # world size. This one resolves dp_shard to the world size (dp_shard_size
+  # -1, dp_replicate 1) — pure FSDP2 at whatever nproc the launcher gives
+  # (6 in the 6-GPU midtrain shape). DCP re-shards the 48-GPU checkpoint
+  # on load, as validated by the SFT x6 job.
+  - /run: single_node_8xh100
+  - _self_
+
+optim:
+  # Pretrain LR at the branch point (see header). End-of-400B-cosine value.
+  peak_lr: 4.5e-5
+  eps: 1.0e-8
+  no_decay_param_names:
+    - .bias
+    - norm.weight
+    - .rope_
+    - q_norm.weight
+    - k_norm.weight
+    - tok_embeddings
+
+schedule:
+  # Anneal linearly from peak_lr at the branch point to 0 at total_tokens.
+  anneal_start_tokens: 400_000_000_000
+  min_lr_frac: 0.0
+  # No warmup: the paper continues from the pretrain LR with optimizer
+  # moments carried over (resume_reset_optimizer: false below). If you flip
+  # to a reset optimizer, pair it with rewarm_tokens (~150 steps' worth,
+  # SPAM 2501.06842) to ramp through the cold-moment window.
+  warmup_steps: 0
+  rewarm_tokens: 0
+
+train:
+  # Moments carried over from pretrain (same optimizer grouping/hparams, so
+  # the checkpoint's moments align) — the paper's anneal is a continuation,
+  # not a fresh fit.
+  resume_reset_optimizer: false
+  # 400B pretrain + 10B midtrain (~10% of the full ~100B-token
+  # dolma3_dolmino_mix — no cycling at this budget; see that config's
+  # header for when cycling becomes a concern again).
+  total_tokens: 410_000_000_000
+  seq_len: 4096
+  micro_batch_size: 4
+  # Batch schedule copied verbatim from 1b_repop_v2 so the global batch is
+  # continuous across the branch point regardless of where you branch.
+  global_batch_tokens:
+    warmup: 3_145_728   # M=192 (48*4),  accum=4
+    main:   4_718_592   # M=288 (48*6),  accum=6
+    late:   9_437_184   # M=576 (48*12), accum=12
+  warmup_to_main_at_tokens: 4_000_000_000
+  main_to_late_at_tokens: 360_000_000_000
+  ckpt_every_steps: 100
+  spike:
+    grad_norm_threshold: 5.0
+    skip_steps_on_spike: 5
+    skips_in_window_to_halt: 5
+    halt_window_steps: 100
+    start_step: 1000
+  grad_clip: 1.0
+  dead_tensor_assert_steps: 100
+  state_hash:
+    every_n_steps: 1
+  grad_norm_log:
+    every_n_steps: 1
+    weight_stats_every_n_steps: 100
+
+model:
+  qat:
+    enabled: true
+    method: lsq
+    weight_bits: 8
+    act_bits: 8
+    per_channel_w: true
+    exempt_first_n_blocks: 0
+    scale_refresh_every_n_steps: 1
+  attn_int8_pv: true
+  emb_norm: true
+  qk_norm_gain: false
+  z_loss:
+    coeff: 1.0e-4
+
+run:
+  mixed_precision: true
+
+logging:
+  wandb_project: pretrain-1b-repop
+  metrics_jsonl_path: logs/metrics.jsonl
