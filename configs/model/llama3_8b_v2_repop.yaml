@@ -1,0 +1,53 @@
+# 8B dense Llama-3 on the V2 recipe.
+#
+# WHY A NEW FILE rather than editing llama3_8b_repop.yaml: that one predates the
+# 20260703 incident recipe and still carries gained QK-norm, emb_norm=false and
+# z_loss 1e-5. It is kept as-is so its historical checkpoints stay auditable.
+# This file is the 1B-v2 recipe (configs/model/llama3_1b_proxy_repop.yaml plus
+# the 1b_repop_v2 train overrides) scaled to 8B dimensions (8.03B params,
+# measured from a meta build), so 1B-vs-8B comparisons are not also accidental
+# recipe comparisons.
+name: llama3_8b_v2_repop
+n_layers: 32
+d_model: 4096
+n_heads: 32
+n_kv_heads: 8              # GQA 4:1, same ratio as the 1B proxy
+head_dim: 128              # 32*128 = 4096 = d_model (dense Llama-3 keeps these equal)
+ffn_intermediate: 14336    # SwiGLU per-half width; fused w_gate_up is 28672 wide
+vocab_size: 128256
+# 4096, NOT the old config's 8192: matches the 1B v2 run, so tokens/step and
+# the per-microbatch GEMM shapes line up across runs. Long context is a
+# mid-training phase, not something to vary in a comparison.
+max_seq_len_pretrain: 4096
+
+rope_theta: 500000.0       # Llama-3 default.
+rms_norm_eps: 1.0e-5
+qk_norm: true
+# GAIN-FREE QK-norm — the v2 fix. Unit-RMS q/k with no learnable gamma, so the
+# unbounded attention-temperature product that drove the July 2026 entropy
+# collapse (19.5 -> 28+) does not exist as an axis.
+qk_norm_gain: false
+# Hybrid SWA 4:1 — 4 sliding-window (512-key) layers per full-causal layer. With
+# n_layers=32 the full-causal layers are 4, 9, 14, 19, 24, 29 and 31 (the last
+# layer is always full causal).
+swa_window: 512
+swa_full_every: 5
+# int8-PV flash attention, matching the 1B run.
+attn_int8_pv: true
+# RMSNorm on the embedding output. ON, as the 1B v2 run has it: it bounds the
+# residual magnitude entering block 0 and is the fix for the LSQ-int8-QAT x
+# embedding-growth grad-norm blow-up. Any int8 QAT run
+# should have this.
+emb_norm: true
+
+init:
+  std: 0.02                # flat, no depth scaling (OLMo 2 §3.2)
+z_loss:
+  enabled: true
+  coeff: 1.0e-4            # 1e-4, the v2 value (the old 8B config had 1e-5)
+modules:
+  attention: gqa_qknorm_repop
+  ffn: swiglu_repop
+  norm: rmsnorm_repop
+  rope: rope_default
+  embedding: untied_repop
